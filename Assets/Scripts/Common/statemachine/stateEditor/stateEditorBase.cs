@@ -72,7 +72,7 @@ namespace Artimech
         void InitStates()
         {
             // all the states for the state editor
-            m_CurrentState = AddState(new editorStartState(null), "Start");
+            m_CurrentState = AddState(new editorspawnPointStartState(null), "spawnPointStart");
             AddState(new editorRestoreState(null), "Restore");
             AddState(new editorLoadState(null), "Load");
             AddState(new editorWaitState(null), "Wait");

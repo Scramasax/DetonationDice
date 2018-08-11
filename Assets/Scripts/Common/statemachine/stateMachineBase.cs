@@ -56,11 +56,11 @@ namespace Artimech
             m_StateChanger = new stateChanger();
             m_StateList = new List<baseState>();
 
-            m_CurrentState = AddState(new stateEmptyExample(gameObject), "Start");
+            m_CurrentState = AddState(new stateEmptyExample(gameObject), "spawnPointStart");
         }
 
         // Use this for initialization
-        protected void Start()
+        protected void spawnPointStart()
         {
 
         }

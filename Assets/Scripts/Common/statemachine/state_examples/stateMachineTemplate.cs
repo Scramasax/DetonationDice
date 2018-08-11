@@ -31,9 +31,9 @@ namespace Artimech
         }
 
         // Use this for initialization
-        new void Start()
+        new void spawnPointStart()
         {
-            base.Start();
+            base.spawnPointStart();
         }
 
         // Update is called once per frame

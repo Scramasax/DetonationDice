@@ -165,17 +165,17 @@ public static class utlDataAndFile
     /// Returns a string between two str tokens.
     /// </summary>
     /// <param name="strSource"></param>
-    /// <param name="strStart"></param>
+    /// <param name="strspawnPointStart"></param>
     /// <param name="strEnd"></param>
     /// <returns></returns>
-    public static string GetBetween(string strSource, string strStart, string strEnd)
+    public static string GetBetween(string strSource, string strspawnPointStart, string strEnd)
     {
-        int Start, End;
-        if (strSource.Contains(strStart) && strSource.Contains(strEnd))
+        int spawnPointStart, End;
+        if (strSource.Contains(strspawnPointStart) && strSource.Contains(strEnd))
         {
-            Start = strSource.IndexOf(strStart, 0) + strStart.Length;
-            End = strSource.IndexOf(strEnd, Start);
-            return strSource.Substring(Start, End - Start);
+            spawnPointStart = strSource.IndexOf(strspawnPointStart, 0) + strspawnPointStart.Length;
+            End = strSource.IndexOf(strEnd, spawnPointStart);
+            return strSource.Substring(spawnPointStart, End - spawnPointStart);
         }
 
         return null;
@@ -185,17 +185,17 @@ public static class utlDataAndFile
     /// Returns a string that has had a string inserted from a str token.
     /// </summary>
     /// <param name="strSource"></param>
-    /// <param name="strStart"></param>
+    /// <param name="strspawnPointStart"></param>
     /// <param name="strInsert"></param>
     /// <returns></returns>
-    public static string InsertInFrontOf(string strSource, string strStart, string strInsert)
+    public static string InsertInFrontOf(string strSource, string strspawnPointStart, string strInsert)
     {
         string strOut = "";
         int startIndex = 0;
 
-        if (strSource.Contains(strStart))
+        if (strSource.Contains(strspawnPointStart))
         {
-            startIndex = strSource.IndexOf(strStart, 0) + strStart.Length;
+            startIndex = strSource.IndexOf(strspawnPointStart, 0) + strspawnPointStart.Length;
 
             StringBuilder stringBuilder = new StringBuilder(strSource);
             stringBuilder.Insert(startIndex, strInsert);
@@ -210,22 +210,22 @@ public static class utlDataAndFile
     /// Returns a string with find and replace between two str tokens.
     /// </summary>
     /// <param name="strSource"></param>
-    /// <param name="strStart"></param>
+    /// <param name="strspawnPointStart"></param>
     /// <param name="strEnd"></param>
     /// <param name="strReplace"></param>
     /// <returns>string</returns>
-    public static string ReplaceBetween(string strSource, string strStart, string strEnd, string strReplace)
+    public static string ReplaceBetween(string strSource, string strspawnPointStart, string strEnd, string strReplace)
     {
-        int Start, End;
+        int spawnPointStart, End;
         string strOut = "";
-        if (strSource.Contains(strStart) && strSource.Contains(strEnd))
+        if (strSource.Contains(strspawnPointStart) && strSource.Contains(strEnd))
         {
-            Start = strSource.IndexOf(strStart, 0) + strStart.Length;
-            End = strSource.IndexOf(strEnd, Start);
+            spawnPointStart = strSource.IndexOf(strspawnPointStart, 0) + strspawnPointStart.Length;
+            End = strSource.IndexOf(strEnd, spawnPointStart);
 
             StringBuilder stringBuilder = new StringBuilder(strSource);
-            stringBuilder.Remove(Start, End - Start);
-            stringBuilder.Insert(Start, strReplace);
+            stringBuilder.Remove(spawnPointStart, End - spawnPointStart);
+            stringBuilder.Insert(spawnPointStart, strReplace);
             strOut = stringBuilder.ToString();
             return strOut;
         }

@@ -56,34 +56,34 @@ public static class utlMath
     /// Gets the nearest point on a line segment.
     /// </summary>
     /// <param name="vPoint"></param>
-    /// <param name="vLineStart"></param>
+    /// <param name="vLinespawnPointStart"></param>
     /// <param name="vLineEnd"></param>
     /// <returns></returns>
-    public static Vector3 NearestPointOnLine(Vector3 vPoint, Vector3 vLineStart, Vector3 vLineEnd)
+    public static Vector3 NearestPointOnLine(Vector3 vPoint, Vector3 vLinespawnPointStart, Vector3 vLineEnd)
     {
         Vector3 vectOut = new Vector3();
-        Vector3 vectPointMinusLineStart, vectEndMinusStart;
+        Vector3 vectPointMinusLinespawnPointStart, vectEndMinusspawnPointStart;
         float dotProduct;
 
-        vectPointMinusLineStart = vPoint - vLineStart;
-        vectEndMinusStart = vLineEnd - vLineStart;
-        if (Vector3.Dot(vectPointMinusLineStart, vectEndMinusStart) <= 0.0f)
+        vectPointMinusLinespawnPointStart = vPoint - vLinespawnPointStart;
+        vectEndMinusspawnPointStart = vLineEnd - vLinespawnPointStart;
+        if (Vector3.Dot(vectPointMinusLinespawnPointStart, vectEndMinusspawnPointStart) <= 0.0f)
         {
-            return vLineStart;
+            return vLinespawnPointStart;
         }
 
-        vectPointMinusLineStart = vPoint - vLineEnd;
-        vectEndMinusStart *= -1;
+        vectPointMinusLinespawnPointStart = vPoint - vLineEnd;
+        vectEndMinusspawnPointStart *= -1;
 
-        dotProduct = Vector3.Dot(vectPointMinusLineStart, vectEndMinusStart);
+        dotProduct = Vector3.Dot(vectPointMinusLinespawnPointStart, vectEndMinusspawnPointStart);
         if (dotProduct <= 0.0f)
         {
             return vLineEnd;
         }
 
-        float distance = dotProduct / vectEndMinusStart.sqrMagnitude;
+        float distance = dotProduct / vectEndMinusspawnPointStart.sqrMagnitude;
 
-        vectOut = Vector3.Lerp(vLineEnd, vLineStart, distance);
+        vectOut = Vector3.Lerp(vLineEnd, vLinespawnPointStart, distance);
 
         return vectOut;
     }

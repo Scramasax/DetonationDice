@@ -305,22 +305,22 @@ namespace Artimech
             string pathName = "Assets/Scripts/artiMechStates/";
             //string FileName = "Assets/Scripts/Common/statemachine/state_examples/stateTemplate.cs";
 
-            string pathAndFileNameStartState = pathName
+            string pathAndFileNamespawnPointStartState = pathName
                                 + "aMech"
                                 + gameobject.name
                                 + "/"
                                 + stateName
                                 + ".cs";
 
-            if (File.Exists(pathAndFileNameStartState))
+            if (File.Exists(pathAndFileNamespawnPointStartState))
             {
                 if (showLog)
-                    Debug.Log("<color=red>stateEditor.CreateStateMachine = </color> <color=blue> " + pathAndFileNameStartState + "</color> <color=red>Already exists and can't be overridden...</color>");
+                    Debug.Log("<color=red>stateEditor.CreateStateMachine = </color> <color=blue> " + pathAndFileNamespawnPointStartState + "</color> <color=red>Already exists and can't be overridden...</color>");
                 return false;
             }
 
             //creates a start state from a template and populate aMech directory
-            ReadReplaceAndWrite(exampleToCopy, stateName, pathName, pathAndFileNameStartState, replaceName, "");
+            ReadReplaceAndWrite(exampleToCopy, stateName, pathName, pathAndFileNamespawnPointStartState, replaceName, "");
 
             return true;
         }
@@ -334,7 +334,7 @@ namespace Artimech
                 return false;
 
             string modStr = "";
-            //AddState(new stateStartTemplate(this.gameObject), "stateStartTemplate", "new state change system");
+            //AddState(new statespawnPointStartTemplate(this.gameObject), "statespawnPointStartTemplate", "new state change system");
             string insertString = "\n            m_ConditionalList.Add(new "
                                 + conditionName
                                 + "("
@@ -481,7 +481,7 @@ namespace Artimech
         /// <summary>
         /// Artimech's statemachine and startState generation system.
         /// </summary>
-        public static void CreateStateMachineScriptAndStartState()
+        public static void CreateStateMachineScriptAndspawnPointStartState()
         {
 
             string pathAndFileName = k_PathName
@@ -492,13 +492,13 @@ namespace Artimech
                                                         + stateEditorUtils.GameObject.name
                                                         + ".cs";
 
-            string pathAndFileNameStartState = k_PathName
+            string pathAndFileNamespawnPointStartState = k_PathName
                                             + "aMech"
                                             + stateEditorUtils.GameObject.name
                                             + "/"
                                             + "aMech"
                                             + stateEditorUtils.GameObject.name
-                                            + "StartState"
+                                            + "spawnPointStartState"
                                             + ".cs";
 
             if (File.Exists(pathAndFileName))
@@ -513,12 +513,12 @@ namespace Artimech
             Directory.CreateDirectory(directoryName);
 
             //creates a start state from a template and populate aMech directory
-            string stateStartName = "";
-            stateStartName = stateEditorUtils.ReadReplaceAndWrite(
+            string statespawnPointStartName = "";
+            statespawnPointStartName = stateEditorUtils.ReadReplaceAndWrite(
                                                         k_StateTemplateFileAndPath,
-                                                        stateEditorUtils.GameObject.name + "StartState",
+                                                        stateEditorUtils.GameObject.name + "spawnPointStartState",
                                                         k_PathName,
-                                                        pathAndFileNameStartState,
+                                                        pathAndFileNamespawnPointStartState,
                                                         "stateEmptyExample",
                                                         "aMech");
 
@@ -532,8 +532,8 @@ namespace Artimech
                                                         "stateMachineTemplate",
                                                         replaceName);
 
-            //replace the startStartStateTemplate
-            utlDataAndFile.ReplaceTextInFile(pathAndFileName, "stateEmptyExample", stateStartName);
+            //replace the startspawnPointStartStateTemplate
+            utlDataAndFile.ReplaceTextInFile(pathAndFileName, "stateEmptyExample", statespawnPointStartName);
             if (Verbose)
             {
                 Debug.Log(
@@ -544,7 +544,7 @@ namespace Artimech
                             + stateMachName
                             + "</b>:\n"
                             + "<color=blue>Created and added a start state named </color>"
-                            + stateStartName
+                            + statespawnPointStartName
                             + "<color=blue> to </color>"
                             + stateMachName
                             + "\n\n");

@@ -45,7 +45,7 @@ public class utlDebugDraw : MonoBehaviour
 	}
 /*
 	// Use this for initialization
-	void Start () 
+	void spawnPointStart () 
 	{
 	
 	}

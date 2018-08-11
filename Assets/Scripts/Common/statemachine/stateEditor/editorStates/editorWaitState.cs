@@ -71,7 +71,7 @@ namespace Artimech
             }
         }
 
-        public editorWaitState(GameObject gameobject) : base(gameobject, "StartBackground.png")
+        public editorWaitState(GameObject gameobject) : base(gameobject, "spawnPointStartBackground.png")
         {
             //<ArtiMechConditions>
             m_ConditionalList.Add(new editorWaitToLoadConditional("Load"));

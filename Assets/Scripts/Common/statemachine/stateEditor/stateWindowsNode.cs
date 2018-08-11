@@ -287,7 +287,7 @@ namespace Artimech
             return vectOut;
         }
 
-        public Vector3 GetStartPosOnCondition()
+        public Vector3 GetspawnPointStartPosOnCondition()
         {
             Vector3 startPos = GetPos();
             startPos.x += WinRect.width * 0.5f;
@@ -323,7 +323,7 @@ namespace Artimech
             //           Vector3 startPos = GetPos();
             //           startPos.x += WinRect.width * 0.5f;
             //           startPos.y += WinRect.height * 0.5f;
-            Vector3 startPos = GetStartPosForConditional();
+            Vector3 startPos = GetspawnPointStartPosForConditional();
             for (int i = 0; i < ConditionLineList.Count; i++)
             {
                /* Vector3 endPos = ConditionLineList[i].GetPos();
@@ -359,7 +359,7 @@ namespace Artimech
             else
                 GUI.Window(m_Id, stateEditorUtils.TranslationMtx.Transform(WinRect), DrawNodeWindow, m_WindowStateAlias);
 
-            Vector3 startPos = GetStartPosForConditional();
+            Vector3 startPos = GetspawnPointStartPosForConditional();
 
             for (int i = 0; i < this.ConditionLineList.Count; i++)
             {
@@ -385,7 +385,7 @@ namespace Artimech
             return false;
         }
 
-        Vector3 GetStartPosForConditional()
+        Vector3 GetspawnPointStartPosForConditional()
         {
             Vector3 tempVect = new Vector3();
 

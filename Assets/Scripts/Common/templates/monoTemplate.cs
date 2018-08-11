@@ -14,7 +14,7 @@ public class monoTemplate : MonoBehaviour
 
     #region Member Functions
 
-    void Start()
+    void spawnPointStart()
     {
 
     }

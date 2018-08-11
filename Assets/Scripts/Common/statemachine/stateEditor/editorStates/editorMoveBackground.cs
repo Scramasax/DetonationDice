@@ -57,8 +57,8 @@ namespace Artimech
     {
         stateWindowsNode m_WindowsSelectedNode = null;
         bool m_ActionConfirmed = false;
-        Vector2 m_MousePosStart;
-        utlMatrix34 m_StartMtx;
+        Vector2 m_MousePosspawnPointStart;
+        utlMatrix34 m_spawnPointStartMtx;
 
         #region Accessors
 
@@ -99,7 +99,7 @@ namespace Artimech
         /// <param name="gameobject"></param>
         public editorMoveBackground(GameObject gameobject) : base(gameobject)
         {
-            m_StartMtx = new utlMatrix34();
+            m_spawnPointStartMtx = new utlMatrix34();
             //<ArtiMechConditions>
             m_ConditionalList.Add(new editor_MoveBackground_To_Display("Display Windows"));
         }
@@ -139,10 +139,10 @@ namespace Artimech
                 if (ev.type != EventType.MouseUp)
                 {
                     Vector3 mouseChange = new Vector3();
-                    mouseChange =  (Vector3)ev.mousePosition - (Vector3)m_MousePosStart;
+                    mouseChange =  (Vector3)ev.mousePosition - (Vector3)m_MousePosspawnPointStart;
                     //Debug.Log("<color=green>" + "<b>" + "mouseChange" + mouseChange +  "</b></color>");
-                    stateEditorUtils.TranslationMtx.D = m_StartMtx.D +  mouseChange;
-                    //Debug.Log("m_StartMtx.D = " + m_StartMtx.D);
+                    stateEditorUtils.TranslationMtx.D = m_spawnPointStartMtx.D +  mouseChange;
+                    //Debug.Log("m_spawnPointStartMtx.D = " + m_spawnPointStartMtx.D);
                     //Debug.Log("stateEditorUtils.TranslationMtx.D = " + stateEditorUtils.TranslationMtx.D);
                 }
                 else
@@ -167,8 +167,8 @@ namespace Artimech
         public override void Enter()
         {
             m_ActionConfirmed = false;
-            m_MousePosStart = stateEditorUtils.MousePos;
-            m_StartMtx.Set(stateEditorUtils.TranslationMtx);
+            m_MousePosspawnPointStart = stateEditorUtils.MousePos;
+            m_spawnPointStartMtx.Set(stateEditorUtils.TranslationMtx);
             stateEditorUtils.Repaint();
         }
 

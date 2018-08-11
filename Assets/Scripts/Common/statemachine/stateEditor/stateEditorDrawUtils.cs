@@ -42,11 +42,11 @@ namespace Artimech
             //stateEditorDrawUtils.DrawGridBackground(new Vector2(-5000, -5000), new Vector2(5000, 5000), new Vector2(250, 250), 1, blueCol);
         }
 
-        public static void DrawGridBackground(Vector2 gridStart, Vector2 gridEnd, Vector2 gridSize, int lineWidth, Color lineColor)
+        public static void DrawGridBackground(Vector2 gridspawnPointStart, Vector2 gridEnd, Vector2 gridSize, int lineWidth, Color lineColor)
         {
-            Vector2 startPos = new Vector2(gridStart.x, gridStart.y);
-            Vector2 endPos = new Vector2(gridEnd.x, gridStart.y);
-            float distance = utlMath.FloatDistance(gridStart.x, gridEnd.x);
+            Vector2 startPos = new Vector2(gridspawnPointStart.x, gridspawnPointStart.y);
+            Vector2 endPos = new Vector2(gridEnd.x, gridspawnPointStart.y);
+            float distance = utlMath.FloatDistance(gridspawnPointStart.x, gridEnd.x);
             float gridCount = distance / gridSize.x;
             for (int indexX = 0; indexX < gridCount; indexX++)
             {
@@ -57,8 +57,8 @@ namespace Artimech
                 DrawLine(stateEditorUtils.TranslationMtx.Transform(startPos), stateEditorUtils.TranslationMtx.Transform(endPos), lineWidth, lineColor);
             }
 
-            startPos.Set(gridStart.x, gridStart.y);
-            endPos.Set(gridStart.x, gridEnd.x);
+            startPos.Set(gridspawnPointStart.x, gridspawnPointStart.y);
+            endPos.Set(gridspawnPointStart.x, gridEnd.x);
 
             for (int indexY = 0; indexY < gridCount; indexY++)
             {
@@ -87,25 +87,25 @@ namespace Artimech
 
         public static void DrawX(Vector3 startPos, float sizeX, float sizeY, int lineWidth, Color lineColor)
         {
-            Vector3 lineStart = new Vector3();
+            Vector3 linespawnPointStart = new Vector3();
             Vector3 lineEnd = new Vector3();
 
-            lineStart = startPos + new Vector3(-sizeX * 0.5f, -sizeY * 0.5f, 0);
+            linespawnPointStart = startPos + new Vector3(-sizeX * 0.5f, -sizeY * 0.5f, 0);
             lineEnd = startPos + new Vector3(+sizeX * 0.5f, +sizeY * 0.5f, 0);
 
-            DrawLine(lineStart, lineEnd, lineWidth, lineColor);
+            DrawLine(linespawnPointStart, lineEnd, lineWidth, lineColor);
 
-            lineStart = startPos + new Vector3(+sizeX * 0.5f, -sizeY * 0.5f, 0);
+            linespawnPointStart = startPos + new Vector3(+sizeX * 0.5f, -sizeY * 0.5f, 0);
             lineEnd = startPos + new Vector3(-sizeX * 0.5f, +sizeY * 0.5f, 0);
 
-            DrawLine(lineStart, lineEnd, lineWidth, lineColor);
+            DrawLine(linespawnPointStart, lineEnd, lineWidth, lineColor);
 
         }
 
         public static void DrawWindowSizer(Vector3 startPos, float sizeX, float sizeY, int lineWidth, Color lineColor)
         {
-            Vector3 lineStart = new Vector3();
-            lineStart = startPos;
+            Vector3 linespawnPointStart = new Vector3();
+            linespawnPointStart = startPos;
 
             Vector3 lineEnd = new Vector3();
             lineEnd = startPos;
@@ -114,12 +114,12 @@ namespace Artimech
             Vector3 finalEnd = new Vector3();
             finalEnd = lineEnd;
 
-            DrawLine(lineStart, lineEnd, lineWidth, lineColor);
+            DrawLine(linespawnPointStart, lineEnd, lineWidth, lineColor);
 
             lineEnd = startPos;
             lineEnd.x -= sizeX;
 
-            DrawLine(lineStart, lineEnd, lineWidth, lineColor);
+            DrawLine(linespawnPointStart, lineEnd, lineWidth, lineColor);
 
             DrawLine(finalEnd, lineEnd, lineWidth, lineColor);
 
@@ -131,7 +131,7 @@ namespace Artimech
             Handles.DrawLine(startPos, endPos);//, lineColor, lineWidth);
         }
 
-        public static void DrawArrowTranformed(utlMatrix34 mtx, Vector3 startPos, Vector3 endPos, Rect winRectStart, Rect winRectEnd, int lineWidth, Color lineColor, int shadowWidth, Color shadowColor, Color bodyColor)
+        public static void DrawArrowTranformed(utlMatrix34 mtx, Vector3 startPos, Vector3 endPos, Rect winRectspawnPointStart, Rect winRectEnd, int lineWidth, Color lineColor, int shadowWidth, Color shadowColor, Color bodyColor)
         {
             Vector3 startPosTrans = new Vector3();
             startPosTrans = mtx.Transform(startPos);
@@ -139,27 +139,27 @@ namespace Artimech
             Vector3 endPosTrans = new Vector3();
             endPosTrans = mtx.Transform(endPos);
 
-            Rect transStartRect = new Rect(winRectStart);
+            Rect transspawnPointStartRect = new Rect(winRectspawnPointStart);
             Rect transEndRect = new Rect(winRectEnd);
 
-            transStartRect.position = mtx.Transform(transStartRect.position);
+            transspawnPointStartRect.position = mtx.Transform(transspawnPointStartRect.position);
             transEndRect.position = mtx.Transform(transEndRect.position);
 
             DrawArrow(startPosTrans,
                 endPosTrans,
-                transStartRect,
+                transspawnPointStartRect,
                 transEndRect,
                 lineWidth,
                 lineColor, shadowWidth, shadowColor, bodyColor);
 
         }
 
-        public static void DrawArrow(Vector3 startPos, Vector3 endPos, Rect winRectStart, Rect winRectEnd, int lineWidth, Color lineColor, int shadowWidth, Color shadowColor, Color bodyColor)
+        public static void DrawArrow(Vector3 startPos, Vector3 endPos, Rect winRectspawnPointStart, Rect winRectEnd, int lineWidth, Color lineColor, int shadowWidth, Color shadowColor, Color bodyColor)
         {
 
             //clip the line through the window rects
             Vector2 colPos = new Vector2();
-            if (LineRectIntersection(startPos, endPos, winRectStart, ref colPos))
+            if (LineRectIntersection(startPos, endPos, winRectspawnPointStart, ref colPos))
                 startPos = colPos;
 
             if (LineRectIntersection(startPos, endPos, winRectEnd, ref colPos))
@@ -259,14 +259,14 @@ namespace Artimech
         /// <param name="endPos"></param>
         /// <param name="inSize"></param>
         /// <param name="outSize"></param>
-        /// <param name="winRectStart"></param>
+        /// <param name="winRectspawnPointStart"></param>
         /// <param name="winRectEnd"></param>
         /// <param name="color"></param>
         public static void DrawBezierArrowCurveWithWindowOffsets(Vector3 startPos,
                                                                     Vector3 endPos,
                                                                     float inSize,
                                                                     float outSize,
-                                                                    Rect winRectStart,
+                                                                    Rect winRectspawnPointStart,
                                                                     Rect winRectEnd,
                                                                     int lineWidth,
                                                                     Color lineColor,
@@ -290,7 +290,7 @@ namespace Artimech
 
 
             Vector2 colPos = new Vector2();
-            if (LineRectIntersection(startPos, endPos, winRectStart, ref colPos))
+            if (LineRectIntersection(startPos, endPos, winRectspawnPointStart, ref colPos))
             {
                 startPos = colPos;
 

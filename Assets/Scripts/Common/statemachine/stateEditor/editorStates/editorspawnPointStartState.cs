@@ -1,6 +1,6 @@
 /// Artimech
 /// 
-/// Copyright © <2017> <George A Lancaster>
+/// Copyright � <2017-2018> <George A Lancaster>
 /// Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
 /// and associated documentation files (the "Software"), to deal in the Software without restriction, 
 /// including without limitation the rights to use, copy, modify, merge, publish, distribute, 
@@ -15,10 +15,14 @@
 /// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
 /// TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
 /// OTHER DEALINGS IN THE SOFTWARE.
+/// 
 
+#if UNITY_EDITOR
 using UnityEngine;
+using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 #region XML_DATA
 
@@ -31,8 +35,7 @@ using System.Collections.Generic;
 
 <stateMetaData>
   <State>
-    <alias>Start</alias>
-    <comment></comment>
+    <name>nada</name>
     <posX>20</posX>
     <posY>40</posY>
     <sizeX>150</sizeX>
@@ -45,17 +48,23 @@ using System.Collections.Generic;
 #endregion
 namespace Artimech
 {
-    public class cubeStart : stateGameBase
+    public class editorspawnPointStartState : editorDisplayImageBaseState
     {
 
         /// <summary>
         /// State constructor.
         /// </summary>
         /// <param name="gameobject"></param>
-        public cubeStart(GameObject gameobject) : base (gameobject)
+        /// 
+        //IList<stateConditionalBase> m_ConditionalList;
+        //static Texture2D m_spawnPointStartScreenImage = null;
+
+        public editorspawnPointStartState(GameObject gameobject) : base (gameobject, "spawnPointStartBackground.png")
         {
             //<ArtiMechConditions>
-            m_ConditionalList.Add(new cubeStart_To_cubeUpThrust("cubeUpThrust"));
+            m_ConditionalList.Add(new editorspawnPointStartToRestoreConditional("Restore"));
+            m_ConditionalList.Add(new editorspawnPointStartToWaitConditional("Wait"));
+            //InitImage();
         }
 
         /// <summary>
@@ -71,7 +80,7 @@ namespace Artimech
         /// </summary>
         public override void FixedUpdate()
         {
-            base.FixedUpdate();
+
         }
 
         /// <summary>
@@ -87,7 +96,7 @@ namespace Artimech
         /// </summary>
         public override void Enter()
         {
-            base.Enter();
+
         }
 
         /// <summary>
@@ -95,7 +104,8 @@ namespace Artimech
         /// </summary>
         public override void Exit()
         {
-            base.Exit();
+
         }
     }
 }
+#endif

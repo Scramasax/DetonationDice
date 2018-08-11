@@ -303,10 +303,27 @@
     <Compile Include="Assets\Scripts\artiMechStates\aMechCube\aMechCube.cs" />
     <Compile Include="Assets\Scripts\artiMechStates\aMechCube\cubeNoThrust.cs" />
     <Compile Include="Assets\Scripts\artiMechStates\aMechCube\cubeNoThrust_To_cubeUpThrust.cs" />
-    <Compile Include="Assets\Scripts\artiMechStates\aMechCube\cubeStart.cs" />
-    <Compile Include="Assets\Scripts\artiMechStates\aMechCube\cubeStart_To_cubeUpThrust.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechCube\cubespawnPointStart.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechCube\cubespawnPointStart_To_cubeUpThrust.cs" />
     <Compile Include="Assets\Scripts\artiMechStates\aMechCube\cubeUpThrust.cs" />
     <Compile Include="Assets\Scripts\artiMechStates\aMechCube\cubeUpThrust_To_cubeNoThrust.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechDie\aMechDie.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechDie\dieFall.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechDie\dieFall_To_dieGround.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechDie\dieGround.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechDie\diespawnPointStart.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechDie\diespawnPointStart_To_dieFall.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechGridPoint\aMechGridPoint.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechGridPoint\gridPointspawnPointStart.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechGridPoint\gridPointspawnPointStart_To_gridPointUpdate.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechGridPoint\gridPointUpdate.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSpawnPoint\aMechSpawnPoint.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSpawnPoint\spawnPointSpawn.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSpawnPoint\spawnPointSpawn_To_spawnPointUpdate.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSpawnPoint\spawnPointStart.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSpawnPoint\spawnPointStart_To_spawnPointUpdate.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSpawnPoint\spawnPointUpdate.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSpawnPoint\spawnPointUpdate_To_spawnPointSpawn.cs" />
     <Compile Include="Assets\Scripts\Common\gameMgr.cs" />
     <Compile Include="Assets\Scripts\Common\statemachine\baseState.cs" />
     <Compile Include="Assets\Scripts\Common\statemachine\iSubscriptionConditional.cs" />
@@ -342,8 +359,8 @@
     <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorConditionals\editorAddPostCondtionalToDisplay.cs" />
     <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorConditionals\editorCreateToDistplayConditional.cs" />
     <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorConditionals\editorRestoreToLoadConditional.cs" />
-    <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorConditionals\editorStartToRestoreConditional.cs" />
-    <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorConditionals\editorStartToWaitConditional.cs" />
+    <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorConditionals\editorspawnPointStartToRestoreConditional.cs" />
+    <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorConditionals\editorspawnPointStartToWaitConditional.cs" />
     <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorConditionals\editorWaitToCreateConditional.cs" />
     <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorConditionals\editorWaitToLoadConditional.cs" />
     <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorConditionals\state_To_Display_Conditionals\editor_CopyStateMachine_To_Display.cs" />
@@ -369,7 +386,7 @@
     <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorResizeState.cs" />
     <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorRestoreState.cs" />
     <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorSaveState.cs" />
-    <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorStartState.cs" />
+    <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorspawnPointStartState.cs" />
     <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\editorStates\editorWaitState.cs" />
     <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\stateCopyStateMachineWindow.cs" />
     <Compile Include="Assets\Scripts\Common\statemachine\stateEditor\stateDeleteWindow.cs" />
@@ -397,11 +414,11 @@
     <Compile Include="Assets\Scripts\Common\utils\utlXmlLoadSave.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Models\Put Models here.txt" />
     <None Include="Assets\Prefabs\Put prefabs here.txt" />
     <None Include="Assets\SaveData.xml" />
     <None Include="Assets\Scripts\Common\statemachine\stateEditor\artimech-config.xml" />
     <None Include="Assets\Sounds\Put sounds here.txt" />
+    <None Include="Assets\StateMachine.txt" />
     <None Include="Packages\com.unity.package-manager-ui\Editor\Resources\Styles\Main_Dark.uss" />
     <None Include="Packages\com.unity.package-manager-ui\Editor\Resources\Styles\Main_Light.uss" />
     <None Include="Packages\com.unity.package-manager-ui\Editor\Resources\Templates\Alert.uxml" />

@@ -123,7 +123,7 @@ namespace Artimech
         /// </summary>
         public override void Enter()
         {
-            stateEditorUtils.CreateStateMachineScriptAndStartState();
+            stateEditorUtils.CreateStateMachineScriptAndspawnPointStartState();
         }
 
         /// <summary>

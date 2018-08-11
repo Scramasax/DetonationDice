@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 /// Artimech
 /// 
 /// Copyright © <2017> <George A Lancaster>
@@ -16,7 +15,6 @@
 /// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
 /// TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
 /// OTHER DEALINGS IN THE SOFTWARE.
-/// 
 
 using System;
 using System.Collections.Generic;
@@ -29,21 +27,22 @@ using UnityEngine;
 /// </summary>
 namespace Artimech
 {
-    public class editorStartToRestoreConditional : stateConditionalBase
+    public class diespawnPointStart_To_dieFall : stateConditionalBase
     {
-        public editorStartToRestoreConditional(string changeStateName) : base(changeStateName)
+        
+        public diespawnPointStart_To_dieFall(string changeStateName) : base (changeStateName)
         {
-
+            
         }
 
         public override void Enter(baseState state)
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void Exit(baseState state)
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <summary>
@@ -61,13 +60,9 @@ namespace Artimech
             if (state.m_GameObject.transform.position.y <= 1000)
                 strOut = m_ChangeStateName;
 #endif
-            if (utlDataAndFile.FindAFileInADirectoryRecursively(Application.dataPath, "StateMachine.txt") != null)
-                strOut = m_ChangeStateName;
 
 
             return strOut;
         }
     }
 }
-
-#endif

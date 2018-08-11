@@ -114,11 +114,11 @@ public static class utlAnimCurve
         return outValue;
     }
 
-    public static void BlendCurve(ref AnimationCurve curveOut, AnimationCurve curveStart, AnimationCurve curveEnd, float coef, int keyframes)
+    public static void BlendCurve(ref AnimationCurve curveOut, AnimationCurve curvespawnPointStart, AnimationCurve curveEnd, float coef, int keyframes)
     {
         ClearCurve(ref curveOut);
 
-        float curveStartMaxTime = utlAnimCurve.FindBiggestKeyTime(curveStart);
+        float curvespawnPointStartMaxTime = utlAnimCurve.FindBiggestKeyTime(curvespawnPointStart);
         float curveEndMaxTime = utlAnimCurve.FindBiggestKeyTime(curveEnd);
 
         for (int i = 0; i <= keyframes; i++)
@@ -127,10 +127,10 @@ public static class utlAnimCurve
             if (i != 0)
                 currentCoef = (float)i / (float)keyframes;
 
-            float startTime = curveStartMaxTime * currentCoef;
+            float startTime = curvespawnPointStartMaxTime * currentCoef;
             float endTime = curveEndMaxTime * currentCoef;
 
-            float startValue = curveStart.Evaluate(startTime);
+            float startValue = curvespawnPointStart.Evaluate(startTime);
             float endValue = curveEnd.Evaluate(endTime);
 
             float interpolatedTime = utlMath.Lerp(startTime, endTime, coef);

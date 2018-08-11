@@ -44,7 +44,7 @@ using UnityEngine;
 ///		
 ///		public class Sender : MonoBehaviour 
 /// 	{
-///			void Start () 
+///			void spawnPointStart () 
 /// 		{
 ///				EventRouter.Publish(SenderEvent.Test, this, "Hello World");
 ///			}

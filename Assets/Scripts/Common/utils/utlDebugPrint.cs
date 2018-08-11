@@ -72,7 +72,7 @@ public class utlDebugPrint : MonoBehaviour
 	}
 
 	// Use this for initialization
-	void Start () 
+	void spawnPointStart () 
 	{
 		
 	}

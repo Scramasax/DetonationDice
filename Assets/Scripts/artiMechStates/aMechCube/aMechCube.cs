@@ -35,9 +35,9 @@ namespace Artimech
         }
 
         // Use this for initialization
-        new void Start()
+        new void spawnPointStart()
         {
-            base.Start();
+            base.spawnPointStart();
         }
 
         // Update is called once per frame
@@ -57,7 +57,7 @@ namespace Artimech
         void CreateStates()
         {
 
-            m_CurrentState = AddState(new cubeStart(this.gameObject), "cubeStart");
+            m_CurrentState = AddState(new cubespawnPointStart(this.gameObject), "cubespawnPointStart");
 
             //<ArtiMechStates>
             AddState(new cubeNoThrust(this.gameObject),"cubeNoThrust");

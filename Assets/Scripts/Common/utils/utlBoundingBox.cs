@@ -30,7 +30,7 @@ public class utlBoundingBox : MonoBehaviour
     public Transform m_Focus;
 
 	// Use this for initialization
-	void Start ()
+	void spawnPointStart ()
     {
 	
 	}
