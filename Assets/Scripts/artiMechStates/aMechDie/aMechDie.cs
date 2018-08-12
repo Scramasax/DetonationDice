@@ -23,6 +23,113 @@ namespace Artimech
 {
     public class aMechDie : stateMachineBase
     {
+        [Header("Die Vars:")]
+        [SerializeField]
+        [Tooltip("Time it takes for the die to consider it resting.")]
+        float m_RestTimeLimit = 0.1f;
+        [SerializeField]
+        [Tooltip("Distance per second threshold to consider a die to start to try to rest.")]
+        float m_RestDistance = 0.01f;
+
+        [SerializeField]
+        [Tooltip("Grid movement distance for X/Z movement.")]
+        Vector2 m_MoveDistVect;
+        [SerializeField]
+        [Tooltip("Move curve by distance. (X) of the curve is distance.")]
+        AnimationCurve m_MoveCurveByDistance;
+        [SerializeField]
+        [Tooltip("Rotation angle via MoveDistVect magnitude. (In degrees.)")]
+        float m_RotateAngle = 90.0f;
+
+        [SerializeField]
+        [Tooltip("Time it takes for the die to consider it falling after a move.")]
+        float m_FallTimeLimit = 0.05f;
+
+        [SerializeField]
+        [Tooltip("Collision triggers offset from die faces.")]
+        GameObject[] m_DieFaceTriggerObjs;
+
+        #region Accessors
+
+        public float RestTimeLimit
+        {
+            get
+            {
+                return m_RestTimeLimit;
+            }
+
+            set
+            {
+                m_RestTimeLimit = value;
+            }
+        }
+
+        public float RestDistance
+        {
+            get
+            {
+                return m_RestDistance;
+            }
+
+            set
+            {
+                m_RestDistance = value;
+            }
+        }
+
+        public Vector2 MoveDistVect
+        {
+            get
+            {
+                return m_MoveDistVect;
+            }
+
+            set
+            {
+                m_MoveDistVect = value;
+            }
+        }
+
+        public AnimationCurve MoveCurveByDistance
+        {
+            get
+            {
+                return m_MoveCurveByDistance;
+            }
+
+            set
+            {
+                m_MoveCurveByDistance = value;
+            }
+        }
+
+        public float FallTimeLimit
+        {
+            get
+            {
+                return m_FallTimeLimit;
+            }
+
+            set
+            {
+                m_FallTimeLimit = value;
+            }
+        }
+
+        public GameObject[] DieFaceTriggerObjs
+        {
+            get
+            {
+                return m_DieFaceTriggerObjs;
+            }
+
+            set
+            {
+                m_DieFaceTriggerObjs = value;
+            }
+        }
+
+        #endregion
 
         new void Awake()
         {
@@ -56,8 +163,8 @@ namespace Artimech
             m_CurrentState = AddState(new diespawnPointStart(this.gameObject), "diespawnPointStart");
 
             //<ArtiMechStates>
-            AddState(new dieGround(this.gameObject),"dieGround");
-            AddState(new dieFall(this.gameObject),"dieFall");
+            AddState(new dieGround(this.gameObject), "dieGround");
+            AddState(new dieFall(this.gameObject), "dieFall");
 
         }
     }
