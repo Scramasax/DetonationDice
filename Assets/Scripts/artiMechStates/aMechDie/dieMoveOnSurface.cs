@@ -89,6 +89,8 @@ namespace Artimech
         /// </summary>
         public override void FixedUpdate()
         {
+            Debug.DrawLine(m_GameObject.transform.position, m_MoveToPos,Color.yellow);
+
             aMechDie theScript = m_GameObject.GetComponent<aMechDie>();
             //theScript.GetComponent<Rigidbody>().useGravity = false;
             //theScript.GetComponent<Rigidbody>().AddForce(theScript.MoveVector);
@@ -135,7 +137,8 @@ namespace Artimech
             theScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             //theScript.GetComponent<Rigidbody>().isKinematic = true;
             Vector3 movePos = theScript.transform.position - theScript.MoveVector;
-            m_MoveToPos = SimMgr.Inst.GetClosestGridPoint(movePos);
+            //m_MoveToPos = SimMgr.Inst.GetClosestGridPoint(movePos);
+            m_MoveToPos = movePos;
             m_BeginPos = theScript.transform.position;
             m_BeginDist = Vector3.Distance(m_BeginPos, m_MoveToPos);
 
