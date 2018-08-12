@@ -27,10 +27,10 @@ using UnityEngine;
 /// </summary>
 namespace Artimech
 {
-    public class simMgrStartGame_To_simMgrUpdate : stateConditionalBase
+    public class simMgrTriggerSpawn_To_simMgrUpdate : stateConditionalBase
     {
         
-        public simMgrStartGame_To_simMgrUpdate(string changeStateName) : base (changeStateName)
+        public simMgrTriggerSpawn_To_simMgrUpdate(string changeStateName) : base (changeStateName)
         {
             
         }

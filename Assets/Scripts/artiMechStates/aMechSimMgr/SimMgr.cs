@@ -24,11 +24,20 @@ namespace Artimech
 {
     public class SimMgr : stateMachineBase
     {
+        [Header("SimMgr:")]
+        [SerializeField]
+        [Tooltip("Min Random Time.")]
+        float m_SpawnMinRndTime = 3.0f;
+        [SerializeField]
+        [Tooltip("Max Random Time.")]
+        float m_SpawnMaxRndTime = 6.0f;
+
         private static SimMgr m_Instance = null;
 
         /// <summary>Returns an instance of SimMgr </summary>
         public static SimMgr Inst { get { return m_Instance; } }
 
+        private IList<aMechDie> m_DiceList;
 
 
         private IList<aMechSpawnPoint> m_SpawnPointList;
@@ -45,6 +54,33 @@ namespace Artimech
                 m_SpawnPointList = value;
             }
         }
+
+        public IList<aMechDie> DiceList
+        {
+            get
+            {
+                return m_DiceList;
+            }
+
+            set
+            {
+                m_DiceList = value;
+            }
+        }
+
+        public float GetRandomSpawnTimeLimit()
+        {
+            float fltTemp = 0;
+            fltTemp = Random.Range(m_SpawnMinRndTime, m_SpawnMaxRndTime);
+            return fltTemp;
+        }
+
+        public void SpawnDieAtRandomSpawnPositions()
+        {
+            int rndIndex = Random.Range(0, m_SpawnPointList.Count-1);
+            m_SpawnPointList[rndIndex].Spawn = true;
+        }
+
         new void Awake()
         {
             if (m_Instance != null)
@@ -57,6 +93,7 @@ namespace Artimech
             CreateStates();
 
             m_SpawnPointList = new List<aMechSpawnPoint>();
+            DiceList = new List<aMechDie>();
 
             m_Instance = GetComponent<SimMgr>();
         }
@@ -87,6 +124,7 @@ namespace Artimech
             m_CurrentState = AddState(new simMgrStart(this.gameObject), "simMgrStart");
 
             //<ArtiMechStates>
+            AddState(new simMgrTriggerSpawn(this.gameObject),"simMgrTriggerSpawn");
             AddState(new simMgrStartGame(this.gameObject), "simMgrStartGame");
             AddState(new simMgrGameOverEnd(this.gameObject), "simMgrGameOverEnd");
             AddState(new simMgrGameOverStart(this.gameObject), "simMgrGameOverStart");

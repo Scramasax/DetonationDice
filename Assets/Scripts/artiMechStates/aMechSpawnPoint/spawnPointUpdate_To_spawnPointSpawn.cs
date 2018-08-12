@@ -29,20 +29,20 @@ namespace Artimech
 {
     public class spawnPointUpdate_To_spawnPointSpawn : stateConditionalBase
     {
-        
-        public spawnPointUpdate_To_spawnPointSpawn(string changeStateName) : base (changeStateName)
+
+        public spawnPointUpdate_To_spawnPointSpawn(string changeStateName) : base(changeStateName)
         {
-            
+
         }
 
         public override void Enter(baseState state)
         {
-            
+
         }
 
         public override void Exit(baseState state)
         {
-            
+
         }
 
         /// <summary>
@@ -60,7 +60,9 @@ namespace Artimech
             if (state.m_GameObject.transform.position.y <= 1000)
                 strOut = m_ChangeStateName;
 #endif
-
+            aMechSpawnPoint theScript = state.m_GameObject.GetComponent<aMechSpawnPoint>();
+            if(theScript.Spawn)
+                strOut = m_ChangeStateName;
 
             return strOut;
         }

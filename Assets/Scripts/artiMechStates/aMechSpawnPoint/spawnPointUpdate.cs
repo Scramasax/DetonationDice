@@ -87,6 +87,8 @@ namespace Artimech
         /// </summary>
         public override void Enter()
         {
+            aMechSpawnPoint theScript = m_GameObject.GetComponent<aMechSpawnPoint>();
+            theScript.Spawn = false;
             base.Enter();
         }
 

@@ -27,10 +27,10 @@ using UnityEngine;
 /// </summary>
 namespace Artimech
 {
-    public class simMgrStartGame_To_simMgrUpdate : stateConditionalBase
+    public class simMgrUpdate_To_simMgrTriggerSpawn : stateConditionalBase
     {
         
-        public simMgrStartGame_To_simMgrUpdate(string changeStateName) : base (changeStateName)
+        public simMgrUpdate_To_simMgrTriggerSpawn(string changeStateName) : base (changeStateName)
         {
             
         }
@@ -54,7 +54,9 @@ namespace Artimech
         {
             string strOut = null;
 
-            strOut = m_ChangeStateName;
+            simMgrUpdate theState = (simMgrUpdate)state;
+            if(theState.StateTime>theState.SpawnTimeLimit)
+                strOut = m_ChangeStateName;
 
             return strOut;
         }

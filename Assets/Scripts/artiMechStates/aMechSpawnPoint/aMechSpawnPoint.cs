@@ -23,10 +23,38 @@ namespace Artimech
 {
     public class aMechSpawnPoint : stateMachineBase
     {
-        [Header("aiBrainBase:")]
+        [Header("Spawn Point:")]
         [SerializeField]
-        [Tooltip("Will you move into danger.")]
+        [Tooltip("Gameobject to be spawned.")]
         GameObject m_SpawnObject;
+
+        bool m_Spawn = false;
+
+        public bool Spawn
+        {
+            get
+            {
+                return m_Spawn;
+            }
+
+            set
+            {
+                m_Spawn = value;
+            }
+        }
+
+        public GameObject SpawnObject
+        {
+            get
+            {
+                return m_SpawnObject;
+            }
+
+            set
+            {
+                m_SpawnObject = value;
+            }
+        }
 
         new void Awake()
         {

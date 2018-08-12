@@ -35,8 +35,8 @@ using System.Collections.Generic;
     <comment></comment>
     <posX>260</posX>
     <posY>39</posY>
-    <sizeX>136</sizeX>
-    <sizeY>39</sizeY>
+    <sizeX>137</sizeX>
+    <sizeY>59</sizeY>
   </State>
 </stateMetaData>
 
@@ -47,6 +47,15 @@ namespace Artimech
 {
     public class simMgrUpdate : stateGameBase
     {
+        float m_SpawnTimeLimit = 0;
+
+        public float SpawnTimeLimit
+        {
+            get
+            {
+                return m_SpawnTimeLimit;
+            }
+        }
 
         /// <summary>
         /// State constructor.
@@ -55,6 +64,7 @@ namespace Artimech
         public simMgrUpdate(GameObject gameobject) : base (gameobject)
         {
             //<ArtiMechConditions>
+            m_ConditionalList.Add(new simMgrUpdate_To_simMgrTriggerSpawn("simMgrTriggerSpawn"));
             m_ConditionalList.Add(new simMgrUpdate_To_simMgrGameOverStart("simMgrGameOverStart"));
         }
 
@@ -87,6 +97,7 @@ namespace Artimech
         /// </summary>
         public override void Enter()
         {
+            m_SpawnTimeLimit = SimMgr.Inst.GetRandomSpawnTimeLimit();
             base.Enter();
         }
 
