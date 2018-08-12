@@ -31,12 +31,12 @@ using System.Collections.Generic;
 
 <stateMetaData>
   <State>
-    <alias>Update</alias>
+    <alias>Start</alias>
     <comment></comment>
-    <posX>291</posX>
+    <posX>34</posX>
     <posY>38</posY>
-    <sizeX>150</sizeX>
-    <sizeY>80</sizeY>
+    <sizeX>171</sizeX>
+    <sizeY>55</sizeY>
   </State>
 </stateMetaData>
 
@@ -45,16 +45,17 @@ using System.Collections.Generic;
 #endregion
 namespace Artimech
 {
-    public class gridPointUpdate : stateGameBase
+    public class inputControllerStart : stateGameBase
     {
 
         /// <summary>
         /// State constructor.
         /// </summary>
         /// <param name="gameobject"></param>
-        public gridPointUpdate(GameObject gameobject) : base (gameobject)
+        public inputControllerStart(GameObject gameobject) : base (gameobject)
         {
             //<ArtiMechConditions>
+            m_ConditionalList.Add(new inputControllerStart_To_inputControllerGameUpdate("inputControllerGameUpdate"));
         }
 
         /// <summary>

@@ -38,9 +38,8 @@ namespace Artimech
         public static SimMgr Inst { get { return m_Instance; } }
 
         private IList<aMechDie> m_DiceList;
-
-
         private IList<aMechSpawnPoint> m_SpawnPointList;
+        private IList<aMechGridPoint> m_GridPointList;
 
         public IList<aMechSpawnPoint> SpawnPointList
         {
@@ -68,6 +67,19 @@ namespace Artimech
             }
         }
 
+        public IList<aMechGridPoint> GridPointList
+        {
+            get
+            {
+                return m_GridPointList;
+            }
+
+            set
+            {
+                m_GridPointList = value;
+            }
+        }
+
         public float GetRandomSpawnTimeLimit()
         {
             float fltTemp = 0;
@@ -77,8 +89,29 @@ namespace Artimech
 
         public void SpawnDieAtRandomSpawnPositions()
         {
-            int rndIndex = Random.Range(0, m_SpawnPointList.Count-1);
+            int rndIndex = Random.Range(0, m_SpawnPointList.Count - 1);
             m_SpawnPointList[rndIndex].Spawn = true;
+        }
+
+        public Vector3 GetClosestGridPoint(Vector3 pos)
+        {
+            Vector3 outVect = new Vector3();
+            int index = -1;
+            float distance = float.MaxValue;
+            for(int i=0;i<GridPointList.Count;i++)
+            {
+                float dist = Vector3.Distance(pos, GridPointList[i].transform.position);
+                if(dist<distance)
+                {
+                    index = i;
+                    distance = dist;
+                }
+            }
+
+            if (index != -1)
+                return GridPointList[index].transform.position;
+
+            return outVect;
         }
 
         new void Awake()
@@ -94,6 +127,7 @@ namespace Artimech
 
             m_SpawnPointList = new List<aMechSpawnPoint>();
             DiceList = new List<aMechDie>();
+            GridPointList = new List<aMechGridPoint>();
 
             m_Instance = GetComponent<SimMgr>();
         }
@@ -124,7 +158,7 @@ namespace Artimech
             m_CurrentState = AddState(new simMgrStart(this.gameObject), "simMgrStart");
 
             //<ArtiMechStates>
-            AddState(new simMgrTriggerSpawn(this.gameObject),"simMgrTriggerSpawn");
+            AddState(new simMgrTriggerSpawn(this.gameObject), "simMgrTriggerSpawn");
             AddState(new simMgrStartGame(this.gameObject), "simMgrStartGame");
             AddState(new simMgrGameOverEnd(this.gameObject), "simMgrGameOverEnd");
             AddState(new simMgrGameOverStart(this.gameObject), "simMgrGameOverStart");

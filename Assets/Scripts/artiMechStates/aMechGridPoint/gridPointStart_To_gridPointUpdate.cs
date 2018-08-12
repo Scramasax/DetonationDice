@@ -27,10 +27,10 @@ using UnityEngine;
 /// </summary>
 namespace Artimech
 {
-    public class gridPointspawnPointStart_To_gridPointUpdate : stateConditionalBase
+    public class gridPointStart_To_gridPointUpdate : stateConditionalBase
     {
         
-        public gridPointspawnPointStart_To_gridPointUpdate(string changeStateName) : base (changeStateName)
+        public gridPointStart_To_gridPointUpdate(string changeStateName) : base (changeStateName)
         {
             
         }

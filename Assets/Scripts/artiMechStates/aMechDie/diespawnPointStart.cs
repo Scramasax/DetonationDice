@@ -31,7 +31,7 @@ using System.Collections.Generic;
 
 <stateMetaData>
   <State>
-    <alias>spawnPointStart</alias>
+    <alias>Start</alias>
     <comment></comment>
     <posX>20</posX>
     <posY>40</posY>
@@ -87,6 +87,7 @@ namespace Artimech
         /// </summary>
         public override void Enter()
         {
+            SimMgr.Inst.DiceList.Add(m_GameObject.GetComponent<aMechDie>());
             base.Enter();
         }
 

@@ -27,10 +27,10 @@ using UnityEngine;
 /// </summary>
 namespace Artimech
 {
-    public class dieFall_To_dieGround : stateConditionalBase
+    public class inputControllerCalcDragMove_To_inputControllerGameUpdate : stateConditionalBase
     {
         
-        public dieFall_To_dieGround(string changeStateName) : base (changeStateName)
+        public inputControllerCalcDragMove_To_inputControllerGameUpdate(string changeStateName) : base (changeStateName)
         {
             
         }
@@ -54,13 +54,9 @@ namespace Artimech
         {
             string strOut = null;
 
-#if ARTIMECH_THIS_SHOULD_NEVER_BE_TRUE_BUT_IS_AN_EXAMPLE_OF_A_CONDITION_BEING_TRUE
-            This is an example of setting a contition to true if the gameobject
-            falls below a certain height ingame.
-            if (state.m_GameObject.transform.position.y <= 1000)
+            aMechInputController controller = state.m_GameObject.GetComponent<aMechInputController>();
+            if (!controller.TouchScreen())
                 strOut = m_ChangeStateName;
-#endif
-
 
             return strOut;
         }

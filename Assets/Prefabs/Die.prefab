@@ -199,8 +199,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1637207437224138}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.882504, y: 6.9356413, z: -0.8619971}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1, y: 12, z: 2}
   m_LocalScale: {x: 0.623, y: 0.623, z: 0.623}
   m_Children:
   - {fileID: 4412600348402960}
@@ -567,7 +567,7 @@ Rigidbody:
   m_GameObject: {fileID: 1637207437224138}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -672,16 +672,44 @@ MonoBehaviour:
   m_DisplayStates: 0
   m_CurrentStateName: 
   m_RestTimeLimit: 0.1
-  m_RestDistance: 0.01
+  m_FallVelocityThreshold: 0.01
   m_MoveDistVect: {x: 1, y: 1}
   m_MoveCurveByDistance:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.002363205
+      value: 5.00692
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.4974028
+      value: 7.9856186
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0023632
+      value: 5.00692
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_RotateAngle: 90
   m_FallTimeLimit: 0.05
+  m_SnapDist: 0.05
   m_DieFaceTriggerObjs:
   - {fileID: 1785602209658938}
   - {fileID: 1719817076029444}

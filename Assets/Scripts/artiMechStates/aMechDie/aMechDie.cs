@@ -28,8 +28,8 @@ namespace Artimech
         [Tooltip("Time it takes for the die to consider it resting.")]
         float m_RestTimeLimit = 0.1f;
         [SerializeField]
-        [Tooltip("Distance per second threshold to consider a die to start to try to rest.")]
-        float m_RestDistance = 0.01f;
+        [Tooltip("Fall velocity threshold to consider a die to start to try to rest.")]
+        float m_FallVelocityThreshold = 0.01f;
 
         [SerializeField]
         [Tooltip("Grid movement distance for X/Z movement.")]
@@ -46,8 +46,15 @@ namespace Artimech
         float m_FallTimeLimit = 0.05f;
 
         [SerializeField]
+        [Tooltip("Distance to snap to grid.")]
+        float m_SnapDist = 0.05f;
+
+        [SerializeField]
         [Tooltip("Collision triggers offset from die faces.")]
         GameObject[] m_DieFaceTriggerObjs;
+
+        Vector3 m_MoveVector;
+        bool m_MoveBool = false;
 
         #region Accessors
 
@@ -64,16 +71,16 @@ namespace Artimech
             }
         }
 
-        public float RestDistance
+        public float FallVelocityThreshold
         {
             get
             {
-                return m_RestDistance;
+                return m_FallVelocityThreshold;
             }
 
             set
             {
-                m_RestDistance = value;
+                m_FallVelocityThreshold = value;
             }
         }
 
@@ -129,6 +136,40 @@ namespace Artimech
             }
         }
 
+        public Vector3 MoveVector
+        {
+            get
+            {
+                return m_MoveVector;
+            }
+
+            set
+            {
+                m_MoveVector = value;
+            }
+        }
+
+        public bool MoveBool
+        {
+            get
+            {
+                return m_MoveBool;
+            }
+
+            set
+            {
+                m_MoveBool = value;
+            }
+        }
+
+        public float SnapDist
+        {
+            get
+            {
+                return m_SnapDist;
+            }
+        }
+
         #endregion
 
         new void Awake()
@@ -163,7 +204,9 @@ namespace Artimech
             m_CurrentState = AddState(new diespawnPointStart(this.gameObject), "diespawnPointStart");
 
             //<ArtiMechStates>
-            AddState(new dieGround(this.gameObject), "dieGround");
+            AddState(new dieMoveOnSurface(this.gameObject),"dieMoveOnSurface");
+            AddState(new dieMoveInAir(this.gameObject),"dieMoveInAir");
+            AddState(new dieOnSurface(this.gameObject), "dieOnSurface");
             AddState(new dieFall(this.gameObject), "dieFall");
 
         }

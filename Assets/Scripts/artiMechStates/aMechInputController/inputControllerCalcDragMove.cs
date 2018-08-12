@@ -31,12 +31,12 @@ using System.Collections.Generic;
 
 <stateMetaData>
   <State>
-    <alias>Update</alias>
+    <alias>Calc Input Drag</alias>
     <comment></comment>
-    <posX>291</posX>
-    <posY>38</posY>
-    <sizeX>150</sizeX>
-    <sizeY>80</sizeY>
+    <posX>343</posX>
+    <posY>248</posY>
+    <sizeX>140</sizeX>
+    <sizeY>61</sizeY>
   </State>
 </stateMetaData>
 
@@ -45,16 +45,17 @@ using System.Collections.Generic;
 #endregion
 namespace Artimech
 {
-    public class gridPointUpdate : stateGameBase
+    public class inputControllerCalcDragMove : stateGameBase
     {
-
+        Vector2 m_EndPos;
         /// <summary>
         /// State constructor.
         /// </summary>
         /// <param name="gameobject"></param>
-        public gridPointUpdate(GameObject gameobject) : base (gameobject)
+        public inputControllerCalcDragMove(GameObject gameobject) : base (gameobject)
         {
             //<ArtiMechConditions>
+            m_ConditionalList.Add(new inputControllerCalcDragMove_To_inputControllerGameUpdate("inputControllerGameUpdate"));
         }
 
         /// <summary>
@@ -86,6 +87,31 @@ namespace Artimech
         /// </summary>
         public override void Enter()
         {
+            aMechInputController controller = m_GameObject.GetComponent<aMechInputController>();
+            //controller.StartTouchPos
+            m_EndPos = controller.TouchPosScreenSpace();
+            Vector2 direction = controller.StartScreenPos - m_EndPos;
+            direction = Vector3.Normalize(direction);
+
+            //Move in the positive Z
+            if (direction.x < 0 && direction.y < 0)
+                controller.SelectedDie.MoveVector = new Vector3(0,0,controller.SelectedDie.MoveDistVect.y);
+            //Move in the positive x
+            if (direction.x < 0 && direction.y > 0)
+                controller.SelectedDie.MoveVector = new Vector3(controller.SelectedDie.MoveDistVect.x,0,0);
+            //Move in the negative Z
+            if (direction.x > 0 && direction.y > 0)
+                controller.SelectedDie.MoveVector = new Vector3(0, 0, -controller.SelectedDie.MoveDistVect.y);
+            //Move in the negative x
+            if (direction.x > 0 && direction.y < 0)
+                controller.SelectedDie.MoveVector = new Vector3(-controller.SelectedDie.MoveDistVect.x, 0, 0);
+
+            controller.SelectedDie.MoveBool = true;
+
+ /*           utlDebugPrint.Inst.print("controller.StartScreenPos = " + controller.StartScreenPos.ToString());
+            utlDebugPrint.Inst.print("m_EndPos = " + m_EndPos.ToString());
+            utlDebugPrint.Inst.print(direction.ToString());*/
+
             base.Enter();
         }
 

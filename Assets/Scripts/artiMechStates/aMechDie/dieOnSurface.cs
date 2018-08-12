@@ -31,12 +31,12 @@ using System.Collections.Generic;
 
 <stateMetaData>
   <State>
-    <alias>Update</alias>
+    <alias>On Surface</alias>
     <comment></comment>
-    <posX>291</posX>
-    <posY>38</posY>
-    <sizeX>150</sizeX>
-    <sizeY>80</sizeY>
+    <posX>237</posX>
+    <posY>165</posY>
+    <sizeX>111</sizeX>
+    <sizeY>73</sizeY>
   </State>
 </stateMetaData>
 
@@ -45,16 +45,17 @@ using System.Collections.Generic;
 #endregion
 namespace Artimech
 {
-    public class gridPointUpdate : stateGameBase
+    public class dieOnSurface : stateGameBase
     {
 
         /// <summary>
         /// State constructor.
         /// </summary>
         /// <param name="gameobject"></param>
-        public gridPointUpdate(GameObject gameobject) : base (gameobject)
+        public dieOnSurface(GameObject gameobject) : base (gameobject)
         {
             //<ArtiMechConditions>
+            m_ConditionalList.Add(new dieOnSurface_To_dieMoveOnSurface("dieMoveOnSurface"));
         }
 
         /// <summary>

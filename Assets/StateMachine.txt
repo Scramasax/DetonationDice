@@ -1,1 +1,1 @@
-aMechSpawnPoint,SpawnPoint
+aMechDie,Die

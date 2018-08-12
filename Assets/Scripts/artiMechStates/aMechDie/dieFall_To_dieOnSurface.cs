@@ -27,22 +27,22 @@ using UnityEngine;
 /// </summary>
 namespace Artimech
 {
-    public class diespawnPointStart_To_dieFall : stateConditionalBase
+    public class dieFall_To_dieOnSurface : stateConditionalBase
     {
-        
-        public diespawnPointStart_To_dieFall(string changeStateName) : base (changeStateName)
+        float m_FallTime = 0;
+        public dieFall_To_dieOnSurface(string changeStateName) : base(changeStateName)
         {
-            
+
         }
 
         public override void Enter(baseState state)
         {
-            
+            m_FallTime = 0;
         }
 
         public override void Exit(baseState state)
         {
-            
+
         }
 
         /// <summary>
@@ -54,7 +54,18 @@ namespace Artimech
         {
             string strOut = null;
 
-            strOut = m_ChangeStateName;
+            aMechDie theScript = state.m_GameObject.GetComponent<aMechDie>();
+            if (theScript.gameObject.GetComponent<Rigidbody>().velocity.sqrMagnitude < theScript.FallVelocityThreshold)
+            {
+                m_FallTime += gameMgr.GetSeconds();
+            }
+
+            if (theScript.gameObject.GetComponent<Rigidbody>().velocity.sqrMagnitude < theScript.FallVelocityThreshold && m_FallTime > theScript.FallTimeLimit)
+            {
+                strOut = m_ChangeStateName;
+            }
+
+            //utlDebugPrint.Inst.print(theScript.gameObject.GetComponent<Rigidbody>().velocity.sqrMagnitude.ToString());
 
             return strOut;
         }

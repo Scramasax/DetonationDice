@@ -31,12 +31,12 @@ using System.Collections.Generic;
 
 <stateMetaData>
   <State>
-    <alias>spawnPointStart</alias>
+    <alias>Move In Air</alias>
     <comment></comment>
-    <posX>20</posX>
-    <posY>40</posY>
-    <sizeX>150</sizeX>
-    <sizeY>80</sizeY>
+    <posX>22</posX>
+    <posY>294</posY>
+    <sizeX>112</sizeX>
+    <sizeY>72</sizeY>
   </State>
 </stateMetaData>
 
@@ -45,17 +45,16 @@ using System.Collections.Generic;
 #endregion
 namespace Artimech
 {
-    public class gridPointspawnPointStart : stateGameBase
+    public class dieMoveInAir : stateGameBase
     {
 
         /// <summary>
         /// State constructor.
         /// </summary>
         /// <param name="gameobject"></param>
-        public gridPointspawnPointStart(GameObject gameobject) : base (gameobject)
+        public dieMoveInAir(GameObject gameobject) : base (gameobject)
         {
             //<ArtiMechConditions>
-            m_ConditionalList.Add(new gridPointspawnPointStart_To_gridPointUpdate("gridPointUpdate"));
         }
 
         /// <summary>

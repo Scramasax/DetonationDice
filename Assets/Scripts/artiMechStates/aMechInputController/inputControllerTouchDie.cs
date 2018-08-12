@@ -31,12 +31,12 @@ using System.Collections.Generic;
 
 <stateMetaData>
   <State>
-    <alias>Update</alias>
+    <alias>Touch Die</alias>
     <comment></comment>
-    <posX>291</posX>
-    <posY>38</posY>
-    <sizeX>150</sizeX>
-    <sizeY>80</sizeY>
+    <posX>251</posX>
+    <posY>373</posY>
+    <sizeX>148</sizeX>
+    <sizeY>44</sizeY>
   </State>
 </stateMetaData>
 
@@ -45,16 +45,18 @@ using System.Collections.Generic;
 #endregion
 namespace Artimech
 {
-    public class gridPointUpdate : stateGameBase
+    public class inputControllerTouchDie : stateGameBase
     {
 
         /// <summary>
         /// State constructor.
         /// </summary>
         /// <param name="gameobject"></param>
-        public gridPointUpdate(GameObject gameobject) : base (gameobject)
+        public inputControllerTouchDie(GameObject gameobject) : base(gameobject)
         {
             //<ArtiMechConditions>
+            m_ConditionalList.Add(new inputControllerTouchDie_To_inputControllerCalcDragMove("inputControllerCalcDragMove"));
+            m_ConditionalList.Add(new inputControllerTouchDie_To_inputControllerGameUpdate("inputControllerGameUpdate"));
         }
 
         /// <summary>
@@ -86,6 +88,11 @@ namespace Artimech
         /// </summary>
         public override void Enter()
         {
+            aMechInputController controller = m_GameObject.GetComponent<aMechInputController>();
+            controller.SelectedDie = controller.GetTouchDie();
+            controller.StartScreenPos = controller.TouchPosScreenSpace();
+            controller.StartTouchPos = controller.TouchPosWorldSpace();
+
             base.Enter();
         }
 

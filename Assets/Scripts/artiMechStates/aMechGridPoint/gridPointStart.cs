@@ -31,12 +31,12 @@ using System.Collections.Generic;
 
 <stateMetaData>
   <State>
-    <alias>On Ground</alias>
+    <alias>Start</alias>
     <comment></comment>
-    <posX>211</posX>
-    <posY>168</posY>
-    <sizeX>113</sizeX>
-    <sizeY>64</sizeY>
+    <posX>20</posX>
+    <posY>40</posY>
+    <sizeX>150</sizeX>
+    <sizeY>80</sizeY>
   </State>
 </stateMetaData>
 
@@ -45,16 +45,17 @@ using System.Collections.Generic;
 #endregion
 namespace Artimech
 {
-    public class dieGround : stateGameBase
+    public class gridPointStart : stateGameBase
     {
 
         /// <summary>
         /// State constructor.
         /// </summary>
         /// <param name="gameobject"></param>
-        public dieGround(GameObject gameobject) : base (gameobject)
+        public gridPointStart(GameObject gameobject) : base (gameobject)
         {
             //<ArtiMechConditions>
+            m_ConditionalList.Add(new gridPointStart_To_gridPointUpdate("gridPointUpdate"));
         }
 
         /// <summary>
@@ -86,6 +87,7 @@ namespace Artimech
         /// </summary>
         public override void Enter()
         {
+            SimMgr.Inst.GridPointList.Add(m_GameObject.GetComponent<aMechGridPoint>());
             base.Enter();
         }
 
