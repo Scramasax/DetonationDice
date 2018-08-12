@@ -31,12 +31,12 @@ using System.Collections.Generic;
 
 <stateMetaData>
   <State>
-    <alias>Start</alias>
+    <alias>Update</alias>
     <comment></comment>
-    <posX>18</posX>
+    <posX>260</posX>
     <posY>39</posY>
-    <sizeX>111</sizeX>
-    <sizeY>67</sizeY>
+    <sizeX>136</sizeX>
+    <sizeY>39</sizeY>
   </State>
 </stateMetaData>
 
@@ -45,17 +45,17 @@ using System.Collections.Generic;
 #endregion
 namespace Artimech
 {
-    public class spawnPointStart : stateGameBase
+    public class simMgrUpdate : stateGameBase
     {
 
         /// <summary>
         /// State constructor.
         /// </summary>
         /// <param name="gameobject"></param>
-        public spawnPointStart(GameObject gameobject) : base (gameobject)
+        public simMgrUpdate(GameObject gameobject) : base (gameobject)
         {
             //<ArtiMechConditions>
-            m_ConditionalList.Add(new spawnPointStart_To_spawnPointUpdate("spawnPointUpdate"));
+            m_ConditionalList.Add(new simMgrUpdate_To_simMgrGameOverStart("simMgrGameOverStart"));
         }
 
         /// <summary>
@@ -87,8 +87,6 @@ namespace Artimech
         /// </summary>
         public override void Enter()
         {
-            aMechSpawnPoint spawnPoint = m_GameObject.GetComponent<aMechSpawnPoint>();
-            SimMgr.Inst.SpawnPointList.Add(spawnPoint);
             base.Enter();
         }
 

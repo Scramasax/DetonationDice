@@ -18,16 +18,47 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Artimech
 {
-    public class stateMachineTemplate : stateMachineBase
+    public class SimMgr : stateMachineBase
     {
+        private static SimMgr m_Instance = null;
 
+        /// <summary>Returns an instance of SimMgr </summary>
+        public static SimMgr Inst { get { return m_Instance; } }
+
+
+
+        private IList<aMechSpawnPoint> m_SpawnPointList;
+
+        public IList<aMechSpawnPoint> SpawnPointList
+        {
+            get
+            {
+                return m_SpawnPointList;
+            }
+
+            set
+            {
+                m_SpawnPointList = value;
+            }
+        }
         new void Awake()
         {
+            if (m_Instance != null)
+            {
+                Debug.LogWarning("There was already an instance of SimMgr.");
+                return;
+            }
+
             base.Awake();
             CreateStates();
+
+            m_SpawnPointList = new List<aMechSpawnPoint>();
+
+            m_Instance = GetComponent<SimMgr>();
         }
 
         // Use this for initialization
@@ -53,9 +84,13 @@ namespace Artimech
         void CreateStates()
         {
 
-            m_CurrentState = AddState(new stateEmptyExample(this.gameObject), "stateEmptyExample");
+            m_CurrentState = AddState(new simMgrStart(this.gameObject), "simMgrStart");
 
             //<ArtiMechStates>
+            AddState(new simMgrStartGame(this.gameObject), "simMgrStartGame");
+            AddState(new simMgrGameOverEnd(this.gameObject), "simMgrGameOverEnd");
+            AddState(new simMgrGameOverStart(this.gameObject), "simMgrGameOverStart");
+            AddState(new simMgrUpdate(this.gameObject), "simMgrUpdate");
 
         }
     }

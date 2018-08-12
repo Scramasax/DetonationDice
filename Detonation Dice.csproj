@@ -317,6 +317,17 @@
     <Compile Include="Assets\Scripts\artiMechStates\aMechGridPoint\gridPointspawnPointStart.cs" />
     <Compile Include="Assets\Scripts\artiMechStates\aMechGridPoint\gridPointspawnPointStart_To_gridPointUpdate.cs" />
     <Compile Include="Assets\Scripts\artiMechStates\aMechGridPoint\gridPointUpdate.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSimMgr\SimMgr.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSimMgr\simMgrGameOverEnd.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSimMgr\simMgrGameOverEnd_To_simMgrStart.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSimMgr\simMgrGameOverStart.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSimMgr\simMgrGameOverStart_To_simMgrGameOverEnd.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSimMgr\simMgrStart.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSimMgr\simMgrStart_To_simMgrStartGame.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSimMgr\simMgrStartGame.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSimMgr\simMgrStartGame_To_simMgrUpdate.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSimMgr\simMgrUpdate.cs" />
+    <Compile Include="Assets\Scripts\artiMechStates\aMechSimMgr\simMgrUpdate_To_simMgrGameOverStart.cs" />
     <Compile Include="Assets\Scripts\artiMechStates\aMechSpawnPoint\aMechSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\artiMechStates\aMechSpawnPoint\spawnPointSpawn.cs" />
     <Compile Include="Assets\Scripts\artiMechStates\aMechSpawnPoint\spawnPointSpawn_To_spawnPointUpdate.cs" />

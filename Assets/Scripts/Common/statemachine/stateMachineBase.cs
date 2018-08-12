@@ -60,9 +60,9 @@ namespace Artimech
         }
 
         // Use this for initialization
-        protected void spawnPointStart()
+        protected void Start()
         {
-
+            
         }
 
         // Update is called once per frame

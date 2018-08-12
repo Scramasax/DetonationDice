@@ -23,6 +23,10 @@ namespace Artimech
 {
     public class aMechSpawnPoint : stateMachineBase
     {
+        [Header("aiBrainBase:")]
+        [SerializeField]
+        [Tooltip("Will you move into danger.")]
+        GameObject m_SpawnObject;
 
         new void Awake()
         {
@@ -31,9 +35,9 @@ namespace Artimech
         }
 
         // Use this for initialization
-        new void spawnPointStart()
+        new void Start()
         {
-            base.spawnPointStart();
+            base.Start();
         }
 
         // Update is called once per frame
