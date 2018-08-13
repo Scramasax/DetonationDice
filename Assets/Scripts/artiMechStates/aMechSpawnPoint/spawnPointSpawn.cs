@@ -88,9 +88,9 @@ namespace Artimech
         public override void Enter()
         {
             aMechSpawnPoint theScript = m_GameObject.GetComponent<aMechSpawnPoint>();
-            int rndX = Random.Range(0, 3);
-            int rndY = Random.Range(0, 3);
-            int rndZ = Random.Range(0, 3);
+            int rndX = Random.Range(0, 2);
+            int rndY = Random.Range(0, 2);
+            int rndZ = Random.Range(0, 2);
             GameObject die = GameObject.Instantiate(theScript.SpawnObject, m_GameObject.transform.position, Quaternion.Euler(90*rndX,90*rndY,90*rndZ));
             //SimMgr.Inst.DiceList.Add(die.GetComponent<aMechDie>());
             base.Enter();

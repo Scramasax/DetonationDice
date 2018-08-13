@@ -52,7 +52,7 @@ namespace Artimech
         /// State constructor.
         /// </summary>
         /// <param name="gameobject"></param>
-        public inputControllerCalcDragMove(GameObject gameobject) : base (gameobject)
+        public inputControllerCalcDragMove(GameObject gameobject) : base(gameobject)
         {
             //<ArtiMechConditions>
             m_ConditionalList.Add(new inputControllerCalcDragMove_To_inputControllerGameUpdate("inputControllerGameUpdate"));
@@ -93,24 +93,41 @@ namespace Artimech
             Vector2 direction = controller.StartScreenPos - m_EndPos;
             direction = Vector3.Normalize(direction);
 
+            float rotDeg = controller.SelectedDie.RotateAngle;
             //Move in the positive Z
             if (direction.x < 0 && direction.y < 0)
-                controller.SelectedDie.MoveVector = new Vector3(0,0,controller.SelectedDie.MoveDistVect.y);
+            {
+                controller.SelectedDie.MoveVector = new Vector3(0, 0, -controller.SelectedDie.MoveDistVect.y);
+                controller.SelectedDie.RotateTo = Quaternion.Euler(rotDeg, 0.0f, 0.0f) * controller.SelectedDie.gameObject.transform.rotation;
+                //utlDebugPrint.Inst.print("A");
+            }
             //Move in the positive x
             if (direction.x < 0 && direction.y > 0)
-                controller.SelectedDie.MoveVector = new Vector3(controller.SelectedDie.MoveDistVect.x,0,0);
+            {
+                controller.SelectedDie.MoveVector = new Vector3(-controller.SelectedDie.MoveDistVect.x, 0, 0);
+                controller.SelectedDie.RotateTo = Quaternion.Euler(0.0f, 0.0f, -rotDeg) * controller.SelectedDie.gameObject.transform.rotation;
+                //utlDebugPrint.Inst.print("B");
+            }
             //Move in the negative Z
             if (direction.x > 0 && direction.y > 0)
-                controller.SelectedDie.MoveVector = new Vector3(0, 0, -controller.SelectedDie.MoveDistVect.y);
+            {
+                controller.SelectedDie.MoveVector = new Vector3(0, 0, controller.SelectedDie.MoveDistVect.y);
+                controller.SelectedDie.RotateTo = Quaternion.Euler(-rotDeg, 0.0f, 0.0f) * controller.SelectedDie.gameObject.transform.rotation;
+                //utlDebugPrint.Inst.print("C");
+            }
             //Move in the negative x
             if (direction.x > 0 && direction.y < 0)
-                controller.SelectedDie.MoveVector = new Vector3(-controller.SelectedDie.MoveDistVect.x, 0, 0);
+            {
+                controller.SelectedDie.MoveVector = new Vector3(controller.SelectedDie.MoveDistVect.x, 0, 0);
+                controller.SelectedDie.RotateTo = Quaternion.Euler(0.0f, 0.0f, rotDeg) * controller.SelectedDie.gameObject.transform.rotation;
+                //utlDebugPrint.Inst.print("D");
+            }
 
             controller.SelectedDie.MoveBool = true;
 
- /*           utlDebugPrint.Inst.print("controller.StartScreenPos = " + controller.StartScreenPos.ToString());
-            utlDebugPrint.Inst.print("m_EndPos = " + m_EndPos.ToString());
-            utlDebugPrint.Inst.print(direction.ToString());*/
+            /*           utlDebugPrint.Inst.print("controller.StartScreenPos = " + controller.StartScreenPos.ToString());
+                       utlDebugPrint.Inst.print("m_EndPos = " + m_EndPos.ToString());
+                       utlDebugPrint.Inst.print(direction.ToString());*/
 
             base.Enter();
         }

@@ -54,6 +54,7 @@ namespace Artimech
         GameObject[] m_DieFaceTriggerObjs;
 
         Vector3 m_MoveVector;
+        Quaternion m_RotateTo;
         bool m_MoveBool = false;
 
         #region Accessors
@@ -167,6 +168,32 @@ namespace Artimech
             get
             {
                 return m_SnapDist;
+            }
+        }
+
+        public float RotateAngle
+        {
+            get
+            {
+                return m_RotateAngle;
+            }
+
+            set
+            {
+                m_RotateAngle = value;
+            }
+        }
+
+        public Quaternion RotateTo
+        {
+            get
+            {
+                return m_RotateTo;
+            }
+
+            set
+            {
+                m_RotateTo = value;
             }
         }
 

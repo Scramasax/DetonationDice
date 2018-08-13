@@ -58,9 +58,11 @@ namespace Artimech
 
             Vector2 vect = controller.TouchPosScreenSpace();
             float dist = Vector2.Distance(vect, controller.StartScreenPos);
-//            utlDebugPrint.Inst.printbox(+ " " + vect.ToString());
- //           utlDebugPrint.Inst.print(dist.ToString());
-            if(dist>controller.DragThresh)
+//            utlDebugPrint.Inst.printbox("controller.StartScreenPos = " + controller.StartScreenPos.ToString());
+//            utlDebugPrint.Inst.printbox("vect = " + vect.ToString());
+//            utlDebugPrint.Inst.print(dist.ToString());
+             
+            if(dist>controller.DragThresh && controller.TouchScreen())
                 strOut = m_ChangeStateName;
 
             return strOut;

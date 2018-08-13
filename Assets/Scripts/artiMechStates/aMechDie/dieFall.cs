@@ -55,7 +55,6 @@ namespace Artimech
         public dieFall(GameObject gameobject) : base (gameobject)
         {
             //<ArtiMechConditions>
-            m_ConditionalList.Add(new dieFall_To_dieMoveInAir("dieMoveInAir"));
             m_ConditionalList.Add(new dieFall_To_dieOnSurface("dieOnSurface"));
         }
 

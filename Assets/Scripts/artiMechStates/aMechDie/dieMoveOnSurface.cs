@@ -51,6 +51,7 @@ namespace Artimech
         Vector3 m_BeginPos;
         float m_BeginDist;
         bool m_GoalReached;
+        Quaternion m_BeginRotation;
 
         public bool GoalReached
         {
@@ -101,7 +102,7 @@ namespace Artimech
             {
                 m_GameObject.transform.position = m_MoveToPos;
                 m_GameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-
+                theScript.gameObject.transform.rotation = theScript.RotateTo;
                 GoalReached = true;
                 return;
             }
@@ -115,6 +116,7 @@ namespace Artimech
             Vector3 dirVelocity = Vector3.Normalize(m_MoveToPos - m_GameObject.transform.position) * velocity;
 
             m_GameObject.GetComponent<Rigidbody>().velocity = dirVelocity;
+            theScript.gameObject.transform.rotation = Quaternion.LerpUnclamped(m_BeginRotation, theScript.RotateTo, distCoef + 0.05f);
 
             base.FixedUpdate();
         }
@@ -135,21 +137,24 @@ namespace Artimech
             GoalReached = false;
             aMechDie theScript = m_GameObject.GetComponent<aMechDie>();
             theScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-            //theScript.GetComponent<Rigidbody>().isKinematic = true;
+            theScript.GetComponent<Rigidbody>().useGravity = false;
+            theScript.GetComponent<Collider>().isTrigger = true;
+            m_BeginRotation = theScript.transform.rotation;
             Vector3 movePos = theScript.transform.position - theScript.MoveVector;
             //m_MoveToPos = SimMgr.Inst.GetClosestGridPoint(movePos);
             m_MoveToPos = movePos;
             m_BeginPos = theScript.transform.position;
             m_BeginDist = Vector3.Distance(m_BeginPos, m_MoveToPos);
 
-            utlDebugPrint.Inst.print(" grid list = " + SimMgr.Inst.GridPointList.Count.ToString());
+ /*           utlDebugPrint.Inst.print(" grid list = " + SimMgr.Inst.GridPointList.Count.ToString());
             utlDebugPrint.Inst.print(" m_BeginPos = " + m_BeginPos.ToString());
             utlDebugPrint.Inst.print(" movePos = " + movePos.ToString());
             utlDebugPrint.Inst.print(" m_MoveToPos = " + m_MoveToPos.ToString());
             utlDebugPrint.Inst.print(" m_BeginDist = " + m_BeginDist.ToString());
             for(int i=0;i< SimMgr.Inst.GridPointList.Count;i++)
                 utlDebugPrint.Inst.print("grid list positions = " + SimMgr.Inst.GridPointList[i].transform.position.ToString());
-
+*/
+            
             base.Enter();
         }
 
@@ -160,7 +165,9 @@ namespace Artimech
         {
             aMechDie theScript = m_GameObject.GetComponent<aMechDie>();
             theScript.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-
+            theScript.GetComponent<Rigidbody>().useGravity = true;
+            theScript.GetComponent<Collider>().isTrigger = false;
+            theScript.MoveBool = false;
             base.Exit();
         }
     }
