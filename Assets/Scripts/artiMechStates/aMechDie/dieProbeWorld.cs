@@ -31,12 +31,12 @@ using System.Collections.Generic;
 
 <stateMetaData>
   <State>
-    <alias>Move In Air</alias>
+    <alias>Probe World</alias>
     <comment></comment>
-    <posX>22</posX>
-    <posY>294</posY>
-    <sizeX>112</sizeX>
-    <sizeY>72</sizeY>
+    <posX>214</posX>
+    <posY>221</posY>
+    <sizeX>124</sizeX>
+    <sizeY>54</sizeY>
   </State>
 </stateMetaData>
 
@@ -45,16 +45,27 @@ using System.Collections.Generic;
 #endregion
 namespace Artimech
 {
-    public class dieMoveInAir : stateGameBase
+    public class dieProbeWorld : stateGameBase
     {
+        bool m_ProbeGood = false;
+
+        public bool ProbeGood
+        {
+            get
+            {
+                return m_ProbeGood;
+            }
+        }
 
         /// <summary>
         /// State constructor.
         /// </summary>
         /// <param name="gameobject"></param>
-        public dieMoveInAir(GameObject gameobject) : base (gameobject)
+        public dieProbeWorld(GameObject gameobject) : base (gameobject)
         {
             //<ArtiMechConditions>
+            m_ConditionalList.Add(new dieProbeWorld_To_dieOnSurface("dieOnSurface"));
+            m_ConditionalList.Add(new dieProbeWorld_To_dieMoveOnSurface("dieMoveOnSurface"));
         }
 
         /// <summary>
@@ -86,6 +97,15 @@ namespace Artimech
         /// </summary>
         public override void Enter()
         {
+            m_ProbeGood = true;
+
+            RaycastHit hitInfo;
+            aMechDie theScript = m_GameObject.GetComponent<aMechDie>();
+            Vector3 moveToPos = theScript.transform.position - theScript.MoveVector;
+            if (Physics.Linecast(theScript.transform.position, moveToPos, out hitInfo))
+            {
+                m_ProbeGood = false;
+            }
             base.Enter();
         }
 

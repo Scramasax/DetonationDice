@@ -33,10 +33,10 @@ using System.Collections.Generic;
   <State>
     <alias>Move On Surface</alias>
     <comment></comment>
-    <posX>230</posX>
-    <posY>293</posY>
-    <sizeX>137</sizeX>
-    <sizeY>76</sizeY>
+    <posX>205</posX>
+    <posY>406</posY>
+    <sizeX>141</sizeX>
+    <sizeY>51</sizeY>
   </State>
 </stateMetaData>
 

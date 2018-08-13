@@ -231,8 +231,8 @@ namespace Artimech
             m_CurrentState = AddState(new diespawnPointStart(this.gameObject), "diespawnPointStart");
 
             //<ArtiMechStates>
+            AddState(new dieProbeWorld(this.gameObject),"dieProbeWorld");
             AddState(new dieMoveOnSurface(this.gameObject),"dieMoveOnSurface");
-            AddState(new dieMoveInAir(this.gameObject),"dieMoveInAir");
             AddState(new dieOnSurface(this.gameObject), "dieOnSurface");
             AddState(new dieFall(this.gameObject), "dieFall");
 

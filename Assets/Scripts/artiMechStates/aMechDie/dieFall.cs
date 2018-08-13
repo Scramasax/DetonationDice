@@ -33,8 +33,8 @@ using System.Collections.Generic;
   <State>
     <alias>Fall</alias>
     <comment></comment>
-    <posX>25</posX>
-    <posY>169</posY>
+    <posX>30</posX>
+    <posY>219</posY>
     <sizeX>100</sizeX>
     <sizeY>62</sizeY>
   </State>

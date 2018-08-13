@@ -33,8 +33,8 @@ using System.Collections.Generic;
   <State>
     <alias>On Surface</alias>
     <comment></comment>
-    <posX>237</posX>
-    <posY>165</posY>
+    <posX>218</posX>
+    <posY>44</posY>
     <sizeX>111</sizeX>
     <sizeY>73</sizeY>
   </State>
@@ -52,10 +52,10 @@ namespace Artimech
         /// State constructor.
         /// </summary>
         /// <param name="gameobject"></param>
-        public dieOnSurface(GameObject gameobject) : base (gameobject)
+        public dieOnSurface(GameObject gameobject) : base(gameobject)
         {
             //<ArtiMechConditions>
-            m_ConditionalList.Add(new dieOnSurface_To_dieMoveOnSurface("dieMoveOnSurface"));
+            m_ConditionalList.Add(new dieOnSurface_To_dieProbeWorld("dieProbeWorld"));
         }
 
         /// <summary>
@@ -63,6 +63,9 @@ namespace Artimech
         /// </summary>
         public override void Update()
         {
+            aMechDie theScript = m_GameObject.GetComponent<aMechDie>();
+            Vector3 moveToPos = theScript.transform.position - theScript.MoveVector;
+            Debug.DrawLine(m_GameObject.transform.position, moveToPos, Color.yellow);
             base.Update();
         }
 
@@ -87,6 +90,8 @@ namespace Artimech
         /// </summary>
         public override void Enter()
         {
+            aMechDie theScript = m_GameObject.GetComponent<aMechDie>();
+            theScript.MoveBool = false;
             base.Enter();
         }
 

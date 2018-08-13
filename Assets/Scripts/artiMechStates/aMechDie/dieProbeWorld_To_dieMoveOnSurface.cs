@@ -27,10 +27,10 @@ using UnityEngine;
 /// </summary>
 namespace Artimech
 {
-    public class dieOnSurface_To_dieMoveOnSurface : stateConditionalBase
+    public class dieProbeWorld_To_dieMoveOnSurface : stateConditionalBase
     {
         
-        public dieOnSurface_To_dieMoveOnSurface(string changeStateName) : base (changeStateName)
+        public dieProbeWorld_To_dieMoveOnSurface(string changeStateName) : base (changeStateName)
         {
             
         }
@@ -54,8 +54,8 @@ namespace Artimech
         {
             string strOut = null;
 
-            aMechDie theScript = state.m_GameObject.GetComponent<aMechDie>();
-            if (theScript.MoveBool)
+            dieProbeWorld theScript = (dieProbeWorld)state;
+            if (theScript.ProbeGood)
                 strOut = m_ChangeStateName;
 
             return strOut;
