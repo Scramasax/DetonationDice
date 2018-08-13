@@ -710,6 +710,10 @@ MonoBehaviour:
   m_RotateAngle: 90
   m_FallTimeLimit: 0.05
   m_SnapDist: 0.05
+  m_DieToDieTestThreshold: 1.5
+  m_HeightMatchThreshold: 0.1
+  m_DeathTimeLimit: 0.25
+  m_VisualObj: {fileID: 1268947764406028}
   m_DieFaceTriggerObjs:
   - {fileID: 1785602209658938}
   - {fileID: 1719817076029444}

@@ -64,6 +64,7 @@ namespace Artimech
         public simMgrUpdate(GameObject gameobject) : base (gameobject)
         {
             //<ArtiMechConditions>
+            m_ConditionalList.Add(new simMgrUpdate_To_simMgrGameWinStart("simMgrGameWinStart"));
             m_ConditionalList.Add(new simMgrUpdate_To_simMgrTriggerSpawn("simMgrTriggerSpawn"));
             m_ConditionalList.Add(new simMgrUpdate_To_simMgrGameOverStart("simMgrGameOverStart"));
         }

@@ -55,7 +55,6 @@ namespace Artimech
         public simMgrGameOverEnd(GameObject gameobject) : base (gameobject)
         {
             //<ArtiMechConditions>
-            m_ConditionalList.Add(new simMgrGameOverEnd_To_simMgrStart("simMgrStart"));
         }
 
         /// <summary>

@@ -55,6 +55,7 @@ namespace Artimech
         public dieOnSurface(GameObject gameobject) : base(gameobject)
         {
             //<ArtiMechConditions>
+            m_ConditionalList.Add(new dieOnSurface_To_dieDeathStart("dieDeathStart"));
             m_ConditionalList.Add(new dieOnSurface_To_dieProbeWorld("dieProbeWorld"));
         }
 

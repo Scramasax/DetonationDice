@@ -18,6 +18,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Artimech
 {
@@ -50,12 +51,31 @@ namespace Artimech
         float m_SnapDist = 0.05f;
 
         [SerializeField]
+        [Tooltip("Threshold to say if a die is closeenough to test.")]
+        float m_DieToDieTestThreshold = 1.5f;
+
+        [SerializeField]
+        [Tooltip("Height distance check to say if die is close enough for a match.")]
+        float m_HeightMatchThreshold = 0.1f;
+
+        [SerializeField]
+        [Tooltip("How long it takes to die.")]
+        float m_DeathTimeLimit = 0.25f;
+
+        [SerializeField]
+        [Tooltip("The visual part of the object.")]
+        GameObject m_VisualObj;
+
+        [SerializeField]
         [Tooltip("Collision triggers offset from die faces.")]
         GameObject[] m_DieFaceTriggerObjs;
 
         Vector3 m_MoveVector;
         Quaternion m_RotateTo;
         bool m_MoveBool = false;
+        bool m_DeathBool = false;
+
+        private IList<aMechDie> m_ContactDiceList;
 
         #region Accessors
 
@@ -197,23 +217,133 @@ namespace Artimech
             }
         }
 
+        public IList<aMechDie> ContactDiceList
+        {
+            get
+            {
+                return m_ContactDiceList;
+            }
+
+            set
+            {
+                m_ContactDiceList = value;
+            }
+        }
+
+        public bool DeathBool
+        {
+            get
+            {
+                return m_DeathBool;
+            }
+
+            set
+            {
+                m_DeathBool = value;
+            }
+        }
+
+        public float DeathTimeLimit
+        {
+            get
+            {
+                return m_DeathTimeLimit;
+            }
+
+            set
+            {
+                m_DeathTimeLimit = value;
+            }
+        }
+
+        public GameObject VisualObj
+        {
+            get
+            {
+                return m_VisualObj;
+            }
+
+            set
+            {
+                m_VisualObj = value;
+            }
+        }
+
         #endregion
+
+        void UpdateContactList()
+        {
+            //ContactDiceList.Clear();
+            for (int i=0;i<SimMgr.Inst.DiceList.Count;i++)
+            {
+                if (SimMgr.Inst.DiceList[i] == this)
+                    continue;
+
+                float yDist = utlMath.FloatDistance(transform.position.y, SimMgr.Inst.DiceList[i].transform.position.y);
+                if (yDist < m_HeightMatchThreshold)
+                    continue;
+
+                float dieToDieDist = Vector3.Distance(transform.position, SimMgr.Inst.DiceList[i].transform.position);
+                if (dieToDieDist > m_DieToDieTestThreshold || SimMgr.Inst.DiceList[i].IsDieOnSurface())
+                    continue;
+
+                int myIndex = GetUpFaceTriggerObjectIndex();
+                int theirIndex = SimMgr.Inst.DiceList[i].GetUpFaceTriggerObjectIndex();
+
+                if (myIndex != theirIndex)
+                    continue;
+
+                m_ContactDiceList.Add(SimMgr.Inst.DiceList[i]);
+
+            }
+        }
+
+        public int GetUpFaceTriggerObjectIndex()
+        {
+            int index=-1;
+            float yHeight = float.MinValue;
+            for(int i=0; i<m_DieFaceTriggerObjs.Length;i++)
+            {
+                if(m_DieFaceTriggerObjs[i].transform.position.y>yHeight)
+                {
+                    yHeight = m_DieFaceTriggerObjs[i].transform.position.y;
+                    index = i;
+                }
+            }
+            return index;
+        }
+
+        public bool IsDieOnSurface()
+        {
+            if (m_CurrentState is dieOnSurface)
+                return true;
+            return false;
+        }
 
         new void Awake()
         {
             base.Awake();
             CreateStates();
+            ContactDiceList = new List<aMechDie>();
         }
 
         // Use this for initialization
         new void Start()
         {
+            ContactDiceList.Clear();
             base.Start();
+        }
+
+        new void LateUpdate()
+        {
+            base.LateUpdate();
         }
 
         // Update is called once per frame
         new void Update()
         {
+            if (IsDieOnSurface())
+                UpdateContactList();
             base.Update();
         }
 
@@ -231,6 +361,8 @@ namespace Artimech
             m_CurrentState = AddState(new diespawnPointStart(this.gameObject), "diespawnPointStart");
 
             //<ArtiMechStates>
+            AddState(new dieDeathEnd(this.gameObject),"dieDeathEnd");
+            AddState(new dieDeathStart(this.gameObject),"dieDeathStart");
             AddState(new dieProbeWorld(this.gameObject),"dieProbeWorld");
             AddState(new dieMoveOnSurface(this.gameObject),"dieMoveOnSurface");
             AddState(new dieOnSurface(this.gameObject), "dieOnSurface");

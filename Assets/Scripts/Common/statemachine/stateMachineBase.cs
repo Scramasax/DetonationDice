@@ -65,6 +65,11 @@ namespace Artimech
             m_CurrentState.Enter();
         }
 
+        protected void LateUpdate()
+        {
+            
+        }
+
         // Update is called once per frame
         protected void Update()
         {

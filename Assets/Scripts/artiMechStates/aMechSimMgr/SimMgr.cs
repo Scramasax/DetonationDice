@@ -19,20 +19,43 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 namespace Artimech
 {
     public class SimMgr : stateMachineBase
     {
         [Header("SimMgr:")]
+
+        [SerializeField]
+        [Tooltip("Base points to be score.  Order of mag as match connect goes up.")]
+        int m_BaseScore = 10;
         [SerializeField]
         [Tooltip("Min Random Time.")]
         float m_SpawnMinRndTime = 3.0f;
         [SerializeField]
         [Tooltip("Max Random Time.")]
         float m_SpawnMaxRndTime = 6.0f;
+        [SerializeField]
+        [Tooltip("Speed Up over time.")]
+        float m_SpawSpeedUpOverTime = 0.01f;
+        [SerializeField]
+        [Tooltip("Speed Up over time.")]
+        float m_SpawnTimeMinCap = 1.0f;
+        [SerializeField]
+        [Tooltip("Game level time in seconds.")]
+        float m_GameLevelTimeMax = 150.0f;
 
+        [SerializeField]
+        [Tooltip("Toggle For push and roll.")]
+        Toggle m_Toggle;
+        [SerializeField]
+        [Tooltip("The text for the score.")]
+        Text m_ScoreText;
         private static SimMgr m_Instance = null;
+        [SerializeField]
+        [Tooltip("Soundtrack.")]
+        AudioSource m_SoundTrack;
 
         /// <summary>Returns an instance of SimMgr </summary>
         public static SimMgr Inst { get { return m_Instance; } }
@@ -40,6 +63,15 @@ namespace Artimech
         private IList<aMechDie> m_DiceList;
         private IList<aMechSpawnPoint> m_SpawnPointList;
         private IList<aMechGridPoint> m_GridPointList;
+
+        private IList<aMechDie> m_DiceMatchBufferList;
+
+        private int m_TotalScore;
+        private float m_MinusSpawnTime;
+        private float m_GameLevelTime;
+        bool m_GameWin;
+        bool m_GameLose;
+
 
         public IList<aMechSpawnPoint> SpawnPointList
         {
@@ -80,10 +112,65 @@ namespace Artimech
             }
         }
 
+        public Toggle Toggle
+        {
+            get
+            {
+                return m_Toggle;
+            }
+        }
+
+        public int TotalScore
+        {
+            get
+            {
+                return m_TotalScore;
+            }
+
+            set
+            {
+                m_TotalScore = value;
+            }
+        }
+
+        public bool GameWin
+        {
+            get
+            {
+                return m_GameWin;
+            }
+
+            set
+            {
+                m_GameWin = value;
+            }
+        }
+
+        public bool GameLose
+        {
+            get
+            {
+                return m_GameLose;
+            }
+
+            set
+            {
+                m_GameLose = value;
+            }
+        }
+
         public float GetRandomSpawnTimeLimit()
         {
             float fltTemp = 0;
-            fltTemp = Random.Range(m_SpawnMinRndTime, m_SpawnMaxRndTime);
+            float outMin = m_SpawnMinRndTime - m_MinusSpawnTime;
+            float outMax = m_SpawnMaxRndTime - m_MinusSpawnTime;
+            fltTemp = Random.Range(outMax, outMax);
+
+ //           utlDebugPrint.Inst.print("outMin " + outMin.ToString());
+  //          utlDebugPrint.Inst.print("outMax " + outMax.ToString());
+  //          utlDebugPrint.Inst.print("m_MinusSpawnTime " + m_MinusSpawnTime.ToString());
+
+            fltTemp = Mathf.Clamp(fltTemp, m_SpawnTimeMinCap, m_SpawnMaxRndTime);
             return fltTemp;
         }
 
@@ -98,10 +185,10 @@ namespace Artimech
             Vector3 outVect = new Vector3();
             int index = -1;
             float distance = float.MaxValue;
-            for(int i=0;i<GridPointList.Count;i++)
+            for (int i = 0; i < GridPointList.Count; i++)
             {
                 float dist = Vector3.Distance(pos, GridPointList[i].transform.position);
-                if(dist<distance)
+                if (dist < distance)
                 {
                     index = i;
                     distance = dist;
@@ -128,6 +215,7 @@ namespace Artimech
             m_SpawnPointList = new List<aMechSpawnPoint>();
             DiceList = new List<aMechDie>();
             GridPointList = new List<aMechGridPoint>();
+            m_DiceMatchBufferList = new List<aMechDie>();
 
             m_Instance = GetComponent<SimMgr>();
         }
@@ -141,12 +229,82 @@ namespace Artimech
         // Update is called once per frame
         new void Update()
         {
+            m_MinusSpawnTime += gameMgr.GetSeconds() * m_SpawSpeedUpOverTime;
+            m_GameLevelTime += gameMgr.GetSeconds();
+            if(m_GameLevelTime>m_GameLevelTimeMax)
+            {
+                m_GameWin = true;
+            }
+
+            if (!m_GameWin && !m_GameLose)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    if (m_Toggle.isOn)
+                        m_Toggle.isOn = false;
+                    else
+                        m_Toggle.isOn = true;
+                }
+
+                UpdateDieMatch();
+            }
             base.Update();
+
+
         }
 
         new void FixedUpdate()
         {
             base.FixedUpdate();
+        }
+
+        void UpdateDieMatch()
+        {
+            //int dieMatchCount = 0;
+
+            for (int i = 0; i < DiceList.Count; i++)
+            {
+                if (DiceList[i].DeathBool)
+                    continue;
+
+                m_DiceMatchBufferList.Clear();
+                for (int j = 0; j < DiceList[i].ContactDiceList.Count; j++)
+                {
+                    m_DiceMatchBufferList.Add(DiceList[i]);
+                    for (int index = 0; index < DiceList[i].ContactDiceList[j].ContactDiceList.Count; index++)
+                    {
+                        aMechDie die = DiceList[i].ContactDiceList[j].ContactDiceList[index];
+                        if (!IsDieAlreadyInBufferList(die))
+                        {
+                            m_DiceMatchBufferList.Add(die);
+                        }
+                    }
+                }
+                if (m_DiceMatchBufferList.Count >= 3)
+                {
+                    TotalScore += m_DiceMatchBufferList.Count * m_DiceMatchBufferList.Count * m_BaseScore;
+                    m_ScoreText.text = "Score:" + TotalScore;
+                    SetBufferedDiceToDeath();
+                }
+            }
+        }
+
+        void SetBufferedDiceToDeath()
+        {
+            for (int i = 0; i < m_DiceMatchBufferList.Count; i++)
+            {
+                m_DiceMatchBufferList[i].DeathBool = true;
+            }
+        }
+
+        bool IsDieAlreadyInBufferList(aMechDie die)
+        {
+            for (int i = 0; i < m_DiceMatchBufferList.Count; i++)
+            {
+                if (m_DiceMatchBufferList[i] == die)
+                    return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -158,6 +316,8 @@ namespace Artimech
             m_CurrentState = AddState(new simMgrStart(this.gameObject), "simMgrStart");
 
             //<ArtiMechStates>
+            AddState(new simMgrGameWinEnd(this.gameObject),"simMgrGameWinEnd");
+            AddState(new simMgrGameWinStart(this.gameObject),"simMgrGameWinStart");
             AddState(new simMgrTriggerSpawn(this.gameObject), "simMgrTriggerSpawn");
             AddState(new simMgrStartGame(this.gameObject), "simMgrStartGame");
             AddState(new simMgrGameOverEnd(this.gameObject), "simMgrGameOverEnd");
