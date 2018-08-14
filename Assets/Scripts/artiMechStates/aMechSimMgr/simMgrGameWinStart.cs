@@ -91,6 +91,7 @@ namespace Artimech
             {
                 SimMgr.Inst.DiceList[i].GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
             }
+            SimMgr.Inst.YouWinText.enabled = true;
             base.Enter();
         }
 

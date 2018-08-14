@@ -45,6 +45,9 @@ namespace Artimech
         [SerializeField]
         [Tooltip("Game level time in seconds.")]
         float m_GameLevelTimeMax = 150.0f;
+        [SerializeField]
+        [Tooltip("Y Height Lose. If a die gets over a certain height you loose.")]
+        float m_YHeightLose = 5.0f;
 
         [SerializeField]
         [Tooltip("Toggle For push and roll.")]
@@ -52,11 +55,23 @@ namespace Artimech
         [SerializeField]
         [Tooltip("The text for the score.")]
         Text m_ScoreText;
-        private static SimMgr m_Instance = null;
         [SerializeField]
         [Tooltip("Soundtrack.")]
         AudioSource m_SoundTrack;
+        [SerializeField]
+        [Tooltip("Game Over Text.")]
+        Text m_GameOverText;
+        [SerializeField]
+        [Tooltip("You Win Text.")]
+        Text m_YouWinText;
+        [SerializeField]
+        [Tooltip("Next Level to load if you win.")]
+        string m_NextLevelWin;
+        [SerializeField]
+        [Tooltip("Next Level to load if you loose.")]
+        string m_NextLevelLose;
 
+        private static SimMgr m_Instance = null;
         /// <summary>Returns an instance of SimMgr </summary>
         public static SimMgr Inst { get { return m_Instance; } }
 
@@ -72,7 +87,7 @@ namespace Artimech
         bool m_GameWin;
         bool m_GameLose;
 
-
+        #region Accessors
         public IList<aMechSpawnPoint> SpawnPointList
         {
             get
@@ -159,6 +174,68 @@ namespace Artimech
             }
         }
 
+        public Text GameOverText
+        {
+            get
+            {
+                return m_GameOverText;
+            }
+
+            set
+            {
+                m_GameOverText = value;
+            }
+        }
+
+        public Text YouWinText
+        {
+            get
+            {
+                return m_YouWinText;
+            }
+
+            set
+            {
+                m_YouWinText = value;
+            }
+        }
+
+        public float GameLevelTimeMax
+        {
+            get
+            {
+                return m_GameLevelTimeMax;
+            }
+        }
+
+        public string NextLevelWin
+        {
+            get
+            {
+                return m_NextLevelWin;
+            }
+
+            set
+            {
+                m_NextLevelWin = value;
+            }
+        }
+
+        public string NextLevelLose
+        {
+            get
+            {
+                return m_NextLevelLose;
+            }
+
+            set
+            {
+                m_NextLevelLose = value;
+            }
+        }
+
+        #endregion
+
         public float GetRandomSpawnTimeLimit()
         {
             float fltTemp = 0;
@@ -166,9 +243,9 @@ namespace Artimech
             float outMax = m_SpawnMaxRndTime - m_MinusSpawnTime;
             fltTemp = Random.Range(outMax, outMax);
 
- //           utlDebugPrint.Inst.print("outMin " + outMin.ToString());
-  //          utlDebugPrint.Inst.print("outMax " + outMax.ToString());
-  //          utlDebugPrint.Inst.print("m_MinusSpawnTime " + m_MinusSpawnTime.ToString());
+            //           utlDebugPrint.Inst.print("outMin " + outMin.ToString());
+            //          utlDebugPrint.Inst.print("outMax " + outMax.ToString());
+            //          utlDebugPrint.Inst.print("m_MinusSpawnTime " + m_MinusSpawnTime.ToString());
 
             fltTemp = Mathf.Clamp(fltTemp, m_SpawnTimeMinCap, m_SpawnMaxRndTime);
             return fltTemp;
@@ -201,6 +278,16 @@ namespace Artimech
             return outVect;
         }
 
+        public bool IsDieRestAboveHeightLimit()
+        {
+            for (int i = 0; i < DiceList.Count; i++)
+            {
+                if (DiceList[i].transform.position.y > m_YHeightLose && DiceList[i].IsDieOnSurface())
+                    return true;
+            }
+            return false;
+        }
+
         new void Awake()
         {
             if (m_Instance != null)
@@ -231,10 +318,13 @@ namespace Artimech
         {
             m_MinusSpawnTime += gameMgr.GetSeconds() * m_SpawSpeedUpOverTime;
             m_GameLevelTime += gameMgr.GetSeconds();
-            if(m_GameLevelTime>m_GameLevelTimeMax)
-            {
+
+            //check for winning.
+            if (m_GameLevelTime > GameLevelTimeMax)
                 m_GameWin = true;
-            }
+
+            //check for losing.
+            m_GameLose = IsDieRestAboveHeightLimit();
 
             if (!m_GameWin && !m_GameLose)
             {
@@ -246,7 +336,7 @@ namespace Artimech
                         m_Toggle.isOn = true;
                 }
 
-                UpdateDieMatch();
+                //UpdateDieMatch();
             }
             base.Update();
 
@@ -316,8 +406,8 @@ namespace Artimech
             m_CurrentState = AddState(new simMgrStart(this.gameObject), "simMgrStart");
 
             //<ArtiMechStates>
-            AddState(new simMgrGameWinEnd(this.gameObject),"simMgrGameWinEnd");
-            AddState(new simMgrGameWinStart(this.gameObject),"simMgrGameWinStart");
+            AddState(new simMgrGameWinEnd(this.gameObject), "simMgrGameWinEnd");
+            AddState(new simMgrGameWinStart(this.gameObject), "simMgrGameWinStart");
             AddState(new simMgrTriggerSpawn(this.gameObject), "simMgrTriggerSpawn");
             AddState(new simMgrStartGame(this.gameObject), "simMgrStartGame");
             AddState(new simMgrGameOverEnd(this.gameObject), "simMgrGameOverEnd");

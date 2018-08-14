@@ -19,6 +19,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 #region XML_DATA
 
@@ -86,6 +87,7 @@ namespace Artimech
         /// </summary>
         public override void Enter()
         {
+            SceneManager.LoadScene(SimMgr.Inst.NextLevelWin);
             base.Enter();
         }
 

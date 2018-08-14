@@ -87,6 +87,7 @@ namespace Artimech
         /// </summary>
         public override void Enter()
         {
+            SimMgr.Inst.GameOverText.enabled = true;
             base.Enter();
         }
 

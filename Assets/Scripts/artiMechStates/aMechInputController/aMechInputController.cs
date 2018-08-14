@@ -41,6 +41,10 @@ namespace Artimech
         aMechDie m_SelectedDie;
         Vector2 m_StartScreenPos;
 
+        private static aMechInputController m_Instance = null;
+        /// <summary>Returns an instance of SimMgr </summary>
+        public static aMechInputController Inst { get { return m_Instance; } }
+
         public Vector3 StartTouchPos
         {
             get
@@ -92,6 +96,7 @@ namespace Artimech
         {
             base.Awake();
             CreateStates();
+            m_Instance = GetComponent<aMechInputController>();
         }
 
         // Use this for initialization
