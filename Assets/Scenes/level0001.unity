@@ -6292,8 +6292,8 @@ MonoBehaviour:
   m_DisplayStates: 0
   m_CurrentStateName: 
   m_BaseScore: 10
-  m_SpawnMinRndTime: 3
-  m_SpawnMaxRndTime: 6
+  m_SpawnMinRndTime: 2
+  m_SpawnMaxRndTime: 5
   m_SpawSpeedUpOverTime: 0.05
   m_SpawnTimeMinCap: 0.5
   m_GameLevelTimeMax: 150

@@ -87,7 +87,12 @@ namespace Artimech
         /// </summary>
         public override void Enter()
         {
-            SimMgr.Inst.GameOverText.enabled = true;
+            for (int i = 0; i < SimMgr.Inst.DiceList.Count; i++)
+            {
+                SimMgr.Inst.DiceList[i].GetComponent<Rigidbody>().useGravity = false;
+                SimMgr.Inst.DiceList[i].GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+            }
+            SimMgr.Inst.GameOverText.gameObject.SetActive(true);
             base.Enter();
         }
 
