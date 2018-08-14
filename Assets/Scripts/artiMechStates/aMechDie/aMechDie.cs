@@ -65,10 +65,14 @@ namespace Artimech
         [SerializeField]
         [Tooltip("The visual part of the object.")]
         GameObject m_VisualObj;
+        [SerializeField]
+        [Tooltip("Particle System.")]
+        ParticleSystem m_ParticleSys;
 
         [SerializeField]
         [Tooltip("Collision triggers offset from die faces.")]
         GameObject[] m_DieFaceTriggerObjs;
+
 
         Vector3 m_MoveVector;
         Quaternion m_RotateTo;
@@ -266,6 +270,19 @@ namespace Artimech
             set
             {
                 m_VisualObj = value;
+            }
+        }
+
+        public ParticleSystem ParticleSys
+        {
+            get
+            {
+                return m_ParticleSys;
+            }
+
+            set
+            {
+                m_ParticleSys = value;
             }
         }
 

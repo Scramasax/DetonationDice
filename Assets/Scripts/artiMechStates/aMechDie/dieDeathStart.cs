@@ -33,7 +33,7 @@ using System.Collections.Generic;
   <State>
     <alias>Death Start</alias>
     <comment></comment>
-    <posX>433</posX>
+    <posX>440</posX>
     <posY>42</posY>
     <sizeX>123</sizeX>
     <sizeY>79</sizeY>
@@ -89,6 +89,8 @@ namespace Artimech
         {
             m_GameObject.GetComponent<aMechDie>().VisualObj.SetActive(false);
             SimMgr.Inst.DiceList.Remove(m_GameObject.GetComponent<aMechDie>());
+            ParticleSystem exp = m_GameObject.GetComponent<aMechDie>().ParticleSys;
+            exp.Play();
             base.Enter();
         }
 

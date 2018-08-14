@@ -86,6 +86,7 @@ namespace Artimech
         /// </summary>
         public override void Enter()
         {
+            //SimMgr.Inst.DiceList.Remove(m_GameObject.GetComponent<aMechDie>());
             GameObject.Destroy(m_GameObject);
             base.Enter();
         }
