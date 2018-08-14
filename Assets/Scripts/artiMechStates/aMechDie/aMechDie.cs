@@ -273,18 +273,18 @@ namespace Artimech
 
         void UpdateContactList()
         {
-            //ContactDiceList.Clear();
+            ContactDiceList.Clear();
             for (int i=0;i<SimMgr.Inst.DiceList.Count;i++)
             {
                 if (SimMgr.Inst.DiceList[i] == this)
                     continue;
 
                 float yDist = utlMath.FloatDistance(transform.position.y, SimMgr.Inst.DiceList[i].transform.position.y);
-                if (yDist < m_HeightMatchThreshold)
+                if (yDist > m_HeightMatchThreshold)
                     continue;
 
                 float dieToDieDist = Vector3.Distance(transform.position, SimMgr.Inst.DiceList[i].transform.position);
-                if (dieToDieDist > m_DieToDieTestThreshold || SimMgr.Inst.DiceList[i].IsDieOnSurface())
+                if (dieToDieDist > m_DieToDieTestThreshold || !SimMgr.Inst.DiceList[i].IsDieOnSurface())
                     continue;
 
                 int myIndex = GetUpFaceTriggerObjectIndex();
@@ -320,6 +320,15 @@ namespace Artimech
             return false;
         }
 
+        void PrintConnectionList()
+        {
+            utlDebugPrint.Inst.print("My name = " + this.name);
+            for (int i = 0; i < m_ContactDiceList.Count; i++)
+            {
+                utlDebugPrint.Inst.print("cname = " + m_ContactDiceList[i].name);
+            }
+        }
+
         new void Awake()
         {
             base.Awake();
@@ -336,6 +345,7 @@ namespace Artimech
 
         new void LateUpdate()
         {
+            //ContactDiceList.Clear();
             base.LateUpdate();
         }
 
@@ -343,7 +353,14 @@ namespace Artimech
         new void Update()
         {
             if (IsDieOnSurface())
+            {
                 UpdateContactList();
+ /*               if (ContactDiceList.Count > 0)
+                {
+                    utlDebugPrint.Inst.print("ContactDiceList.Count=" + ContactDiceList.Count);
+                    PrintConnectionList();
+                }*/
+            }
             base.Update();
         }
 

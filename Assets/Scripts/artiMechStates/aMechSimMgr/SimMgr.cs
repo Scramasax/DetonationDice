@@ -25,11 +25,14 @@ namespace Artimech
 {
     public class SimMgr : stateMachineBase
     {
-        [Header("SimMgr:")]
+        [Header("SimMgr Tuning Vars:")]
 
         [SerializeField]
         [Tooltip("Base points to be score.  Order of mag as match connect goes up.")]
         int m_BaseScore = 10;
+        [SerializeField]
+        [Tooltip("Number it takes to do a non linear match of dice.")]
+        int m_MatchNum = 3;
         [SerializeField]
         [Tooltip("Min Random Time.")]
         float m_SpawnMinRndTime = 3.0f;
@@ -49,6 +52,7 @@ namespace Artimech
         [Tooltip("Y Height Lose. If a die gets over a certain height you loose.")]
         float m_YHeightLose = 5.0f;
 
+        [Header("SimMgr GFX Vars:")]
         [SerializeField]
         [Tooltip("Toggle For push and roll.")]
         Toggle m_Toggle;
@@ -336,7 +340,7 @@ namespace Artimech
                         m_Toggle.isOn = true;
                 }
 
-                //UpdateDieMatch();
+                UpdateDieMatch();
             }
             base.Update();
 
@@ -357,9 +361,13 @@ namespace Artimech
                 if (DiceList[i].DeathBool)
                     continue;
 
+                //utlDebugPrint.Inst.print("DiceList[i].ContactDiceList.Count = " + DiceList[i].ContactDiceList.Count);
+                
+
                 m_DiceMatchBufferList.Clear();
                 for (int j = 0; j < DiceList[i].ContactDiceList.Count; j++)
                 {
+        //            utlDebugPrint.Inst.print("DiceList[i].ContactDiceList.Count = " + DiceList[i].ContactDiceList.Count);
                     m_DiceMatchBufferList.Add(DiceList[i]);
                     for (int index = 0; index < DiceList[i].ContactDiceList[j].ContactDiceList.Count; index++)
                     {
@@ -370,13 +378,18 @@ namespace Artimech
                         }
                     }
                 }
-                if (m_DiceMatchBufferList.Count >= 3)
+                if (m_DiceMatchBufferList.Count >= m_MatchNum-1)
                 {
                     TotalScore += m_DiceMatchBufferList.Count * m_DiceMatchBufferList.Count * m_BaseScore;
                     m_ScoreText.text = "Score:" + TotalScore;
                     SetBufferedDiceToDeath();
                 }
             }
+        }
+
+        int DieCountRecursively(aMechDie die)
+        {
+            return die.ContactDiceList.Count;
         }
 
         void SetBufferedDiceToDeath()

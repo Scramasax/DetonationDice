@@ -124,7 +124,9 @@ public static class utlMath
     /// <returns></returns>
     public static float FloatDistance(float x1, float x2)
     {
-        float dx = Mathf.Abs(x1 - x2);
+        float dx = 0;
+        if(x1!=x2)
+            dx = Mathf.Abs(x1 - x2);
         return dx;
     }
 
